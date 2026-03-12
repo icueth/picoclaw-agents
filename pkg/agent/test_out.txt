@@ -1,0 +1,466 @@
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] context: Building identity without model name - SetModelName not called yet
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {resolved_model=test-model, agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=step-3.5-flash, resolved_model=stepfun/step-3.5-flash:free, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=stepfun/step-3.5-flash:free}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=glm-5, resolved_model=glm-5, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=glm-5}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {resolved_model=Qwen/Qwen3.5-35B-A3B-FP8, agent_id=main, model=qwen3.5-custom-server}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=Qwen/Qwen3.5-35B-A3B-FP8}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {agent_id=main, model=test-model, resolved_model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {resolved_model=test-model, agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {resolved_model=test-model, agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {agent_id=main, model=test-model, resolved_model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Processing message from test:user1: read test.txt {chat_id=chat1, sender_id=user1, session_key=test-session, channel=test}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Routed message {agent_id=main, session_key=agent:main:main, matched_by=default}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: LLM response without tool calls (direct answer) {iteration=1, content_chars=23, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Response: File operation complete {agent_id=main, session_key=agent:main:main, iterations=1, final_length=23}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Processing message from test:user1: run hello {session_key=test-session, channel=test, chat_id=chat1, sender_id=user1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Routed message {agent_id=main, session_key=agent:main:main, matched_by=default}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: LLM response without tool calls (direct answer) {content_chars=27, agent_id=main, iteration=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Response: Command output: hello world {agent_id=main, session_key=agent:main:main, iterations=1, final_length=27}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {workers=1, agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Processing message from test:cron: Trigger message {channel=test, chat_id=test-chat, sender_id=cron, session_key=test-session-context}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Routed message {agent_id=main, session_key=agent:main:main, matched_by=default}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] agent: Context window error detected, attempting compression {retry=0, error=InvalidParameter: Total tokens of image and text exceed max message tokens}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [WARN] agent: Forced compression executed {session_key=agent:main:main, dropped_msgs=6, new_count=8}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: LLM response without tool calls (direct answer) {agent_id=main, iteration=1, content_chars=28}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Response: Recovered from context error {agent_id=main, session_key=agent:main:main, iterations=1, final_length=28}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] channels: Initializing channel manager
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] channels: Channel initialization completed {enabled_channels=0}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {agent_id=main, model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {workers=1, agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Setting model name in context builder {model=test-model, resolved_model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] context: Model name updated, system prompt cache invalidated {model=test-model}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_worker: Agent worker started {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent worker started {model=test-model, agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: Agent initialized for A2A {agent_id=main}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] a2a_orchestrator: A2A Orchestrator initialized {agent_count=1, workers=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A Orchestrator initialized {agent_count=1}
+2026/03/11 00:00:43 [2026-03-10T17:00:43Z] [INFO] agent: A2A tools registered for agent {agent_id=main}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [WARN] agent: Media file too large, skipping {path=/var/folders/mh/6hbrrngn0lg1y9t4_j8gdv4h0000gn/T/TestResolveMediaRefs_SkipsOversizedFile655207221/001/big.png, size=1025, max_size=1024}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [WARN] agent: Unknown media type, skipping {path=/var/folders/mh/6hbrrngn0lg1y9t4_j8gdv4h0000gn/T/TestResolveMediaRefs_SkipsUnknownType1440083278/001/readme.txt}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] memory-v2: Pruned stale memories {count=1, threshold=1}
+--- FAIL: TestStructuredMemory_SyncToMemoryMD (0.02s)
+    memory_v2_test.go:317: failed to read MEMORY.md: open /var/folders/mh/6hbrrngn0lg1y9t4_j8gdv4h0000gn/T/TestStructuredMemory_SyncToMemoryMD911132604/001/memory/MEMORY.md: no such file or directory
+--- FAIL: TestStructuredMemory_MigrateFromMemoryMD (0.00s)
+    memory_v2_test.go:349: expected 4 imported entries, got 0
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {expires_at=2026-03-11 00:30:44.341655 +0700 +07 m=+1801.310463501, pool_size=1, agent_id=outsource-f4debfc1, parent_id=parent-1, role=coder, task_id=task-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-fa387c7f, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.341736 +0700 +07 m=+1801.310544959, pool_size=1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-d1a02b8f, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.341754 +0700 +07 m=+1801.310562918, pool_size=2}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.341762 +0700 +07 m=+1801.310571126, pool_size=3, agent_id=outsource-cc4d7998}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {pool_size=4, agent_id=outsource-250dd621, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.341775 +0700 +07 m=+1801.310583876}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.341783 +0700 +07 m=+1801.310591793, pool_size=5, agent_id=outsource-b9d8d234}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-0632e2c2, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.341804 +0700 +07 m=+1801.310612834, pool_size=1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-a7afe5f3, parent_id=parent-1, role=coder, task_id=task-2, expires_at=2026-03-11 00:30:44.341822 +0700 +07 m=+1801.310631126, pool_size=2}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [WARN] outsource: Pool is at capacity, cannot hire new agent {max_pool_size=2, parent_id=parent-1, role=coder, pool_size=2}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired outsource agent with custom options {ttl=1h0m0s, expires_at=2026-03-11 01:00:44.341886 +0700 +07 m=+3601.310694793, pool_size=1, agent_id=outsource-c02891b2, parent_id=parent-1, role=researcher, task_id=task-1, model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired outsource agent with custom options {parent_id=parent-1, role=coder, task_id=task-1, model=, ttl=30m0s, expires_at=2026-03-11 00:30:44.341922 +0700 +07 m=+1801.310730876, pool_size=2, agent_id=outsource-779ad100}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.342028 +0700 +07 m=+1801.310836501, pool_size=1, agent_id=outsource-b782ff72}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Released outsource agent {agent_id=outsource-b782ff72, role=coder, parent_id=parent-1, hired_at=2026-03-11 00:00:44.342028 +0700 +07 m=+1.310836501, pool_size=0}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [WARN] outsource: Attempted to release non-existent agent {agent_id=non-existent-id}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-d143e02f, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.342084 +0700 +07 m=+1801.310892584, pool_size=1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Released outsource agent {agent_id=outsource-d143e02f, role=coder, parent_id=parent-1, hired_at=2026-03-11 00:00:44.342084 +0700 +07 m=+1.310892584, pool_size=0}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [WARN] outsource: Attempted to release non-existent agent {agent_id=outsource-d143e02f}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {pool_size=1, agent_id=outsource-9c80632d, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.342124 +0700 +07 m=+1801.310932834}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {pool_size=2, agent_id=outsource-34c8c6bc, parent_id=parent-1, role=researcher, task_id=task-2, expires_at=2026-03-11 00:30:44.342136 +0700 +07 m=+1801.310945251}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-2, role=planner, task_id=task-3, expires_at=2026-03-11 00:30:44.342144 +0700 +07 m=+1801.310952959, pool_size=3, agent_id=outsource-36ce2a7d}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-e6ff8766, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.342177 +0700 +07 m=+1801.310985543, pool_size=1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {task_id=task-1, expires_at=2026-03-11 00:30:44.342222 +0700 +07 m=+1801.311030959, pool_size=1, agent_id=outsource-7dc14d7e, parent_id=parent-1, role=coder}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-2, expires_at=2026-03-11 00:30:44.342236 +0700 +07 m=+1801.311044543, pool_size=2, agent_id=outsource-dac979fc}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.342256 +0700 +07 m=+1801.311064834, pool_size=1, agent_id=outsource-e81fa680}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {task_id=task-2, expires_at=2026-03-11 00:30:44.342283 +0700 +07 m=+1801.311091876, pool_size=2, agent_id=outsource-4f15168c, parent_id=parent-1, role=coder}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {pool_size=1, agent_id=outsource-69c3815a, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.342355 +0700 +07 m=+1801.311163918}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Extended agent expiration {agent_id=outsource-69c3815a, new_expires=2026-03-11 00:45:44.342355 +0700 +07 m=+2701.311163918, extension=15m0s}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.342394 +0700 +07 m=+1801.311202959, pool_size=1, agent_id=outsource-ce455ae5, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-192ee77b, parent_id=parent-1, role=researcher, task_id=task-2, expires_at=2026-03-11 00:30:44.342406 +0700 +07 m=+1801.311215001, pool_size=2}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {expires_at=2026-03-11 00:30:44.342413 +0700 +07 m=+1801.311221834, pool_size=3, agent_id=outsource-0aa7975a, parent_id=parent-2, role=coder, task_id=task-3}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-4b32c584, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.342451 +0700 +07 m=+1801.311259334, pool_size=1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-a77f347d, parent_id=parent-1, role=coder, task_id=task-2, expires_at=2026-03-11 00:30:44.342463 +0700 +07 m=+1801.311271876, pool_size=2}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=researcher, task_id=task-3, expires_at=2026-03-11 00:30:44.342469 +0700 +07 m=+1801.311278251, pool_size=3, agent_id=outsource-c4de85b1, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-6ab95dc4, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.342504 +0700 +07 m=+1801.311312334, pool_size=1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=researcher, task_id=task-2, expires_at=2026-03-11 00:30:44.342516 +0700 +07 m=+1801.311324793, pool_size=2, agent_id=outsource-d4df176f}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Updated max pool size {new_max_size=10}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Updated default TTL {new_ttl=1h0m0s}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-cc656dfd, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 01:00:44.342569 +0700 +07 m=+3601.311377959, pool_size=1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-78d993a3, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.342591 +0700 +07 m=+1801.311399376, pool_size=1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-0f3db320, parent_id=parent-1, role=researcher, task_id=task-2, expires_at=2026-03-11 00:30:44.342628 +0700 +07 m=+1801.311436334, pool_size=2}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-9418a0fa, parent_id=parent-2, role=planner, task_id=task-3, expires_at=2026-03-11 00:30:44.342635 +0700 +07 m=+1801.311443293, pool_size=3}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Cleared all agents from pool {cleared_count=3}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {task_id=task-1, expires_at=2026-03-11 00:00:44.442659 +0700 +07 m=+1.411468084, pool_size=1, agent_id=outsource-269ee5ef, parent_id=parent-1, role=coder}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Cleaned up expired agent {agent_id=outsource-269ee5ef, role=coder, parent_id=parent-1, expired_at=2026-03-11 00:00:44.442659 +0700 +07 m=+1.411468084}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-99c0523e, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.54484 +0700 +07 m=+1801.513647626, pool_size=1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {expires_at=2026-03-11 00:30:44.544888 +0700 +07 m=+1801.513696584, pool_size=2, agent_id=outsource-7ef6d5cb, parent_id=parent-1, role=coder, task_id=task-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-b100704f, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.544901 +0700 +07 m=+1801.513709084, pool_size=3}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {expires_at=2026-03-11 00:30:44.544909 +0700 +07 m=+1801.513717001, pool_size=4, agent_id=outsource-4609abfa, parent_id=parent-1, role=coder, task_id=task-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {expires_at=2026-03-11 00:30:44.544919 +0700 +07 m=+1801.513727543, pool_size=5, agent_id=outsource-68388c69, parent_id=parent-1, role=coder, task_id=task-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.544931 +0700 +07 m=+1801.513739001, pool_size=6, agent_id=outsource-ac53f1de, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {pool_size=7, agent_id=outsource-c556e99c, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.544946 +0700 +07 m=+1801.513754168}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {pool_size=8, agent_id=outsource-4db3e353, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.544954 +0700 +07 m=+1801.513762543}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.544973 +0700 +07 m=+1801.513781543, pool_size=9, agent_id=outsource-9ba1bcdb, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-9a5fe505, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.544986 +0700 +07 m=+1801.513794293, pool_size=10}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545 +0700 +07 m=+1801.513808293, pool_size=11, agent_id=outsource-2801ab08, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545018 +0700 +07 m=+1801.513825709, pool_size=12, agent_id=outsource-f4640700, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-c17e0f86, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545025 +0700 +07 m=+1801.513832876, pool_size=13}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-4d574307, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545032 +0700 +07 m=+1801.513839793, pool_size=14}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {pool_size=15, agent_id=outsource-49d7ae6e, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545037 +0700 +07 m=+1801.513845293}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545079 +0700 +07 m=+1801.513887001, pool_size=16, agent_id=outsource-18ee1fc7}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545128 +0700 +07 m=+1801.513936584, pool_size=17, agent_id=outsource-fa5b840a}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {pool_size=18, agent_id=outsource-d7153ff8, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.54514 +0700 +07 m=+1801.513948168}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-9f5e9b0b, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545151 +0700 +07 m=+1801.513959126, pool_size=19}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {task_id=task-1, expires_at=2026-03-11 00:30:44.545164 +0700 +07 m=+1801.513972251, pool_size=20, agent_id=outsource-76bea992, parent_id=parent-1, role=coder}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545176 +0700 +07 m=+1801.513984459, pool_size=21, agent_id=outsource-d32d7699}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {task_id=task-1, expires_at=2026-03-11 00:30:44.545191 +0700 +07 m=+1801.513999001, pool_size=22, agent_id=outsource-5c701b1e, parent_id=parent-1, role=coder}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-a554e55c, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.5452 +0700 +07 m=+1801.514008084, pool_size=23}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {task_id=task-1, expires_at=2026-03-11 00:30:44.545207 +0700 +07 m=+1801.514015084, pool_size=24, agent_id=outsource-2834887d, parent_id=parent-1, role=coder}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545213 +0700 +07 m=+1801.514021334, pool_size=25, agent_id=outsource-5d126670, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545223 +0700 +07 m=+1801.514030959, pool_size=26, agent_id=outsource-e429e712}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {expires_at=2026-03-11 00:30:44.545237 +0700 +07 m=+1801.514045293, pool_size=27, agent_id=outsource-6033c31a, parent_id=parent-1, role=coder, task_id=task-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545245 +0700 +07 m=+1801.514053168, pool_size=28, agent_id=outsource-5b81dd13}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {expires_at=2026-03-11 00:30:44.545251 +0700 +07 m=+1801.514059251, pool_size=29, agent_id=outsource-edd601b4, parent_id=parent-1, role=coder, task_id=task-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545261 +0700 +07 m=+1801.514069543, pool_size=30, agent_id=outsource-2915363c, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.54527 +0700 +07 m=+1801.514078543, pool_size=31, agent_id=outsource-e7dd964e}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-20509686, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.54529 +0700 +07 m=+1801.514098543, pool_size=32}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545301 +0700 +07 m=+1801.514109251, pool_size=33, agent_id=outsource-e8186a44}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545307 +0700 +07 m=+1801.514115168, pool_size=34, agent_id=outsource-4257b746}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545314 +0700 +07 m=+1801.514121959, pool_size=35, agent_id=outsource-41230bf6, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545335 +0700 +07 m=+1801.514142959, pool_size=36, agent_id=outsource-b326f238, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {task_id=task-1, expires_at=2026-03-11 00:30:44.545373 +0700 +07 m=+1801.514180793, pool_size=37, agent_id=outsource-2895e204, parent_id=parent-1, role=coder}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {expires_at=2026-03-11 00:30:44.545386 +0700 +07 m=+1801.514194043, pool_size=38, agent_id=outsource-50583bde, parent_id=parent-1, role=coder, task_id=task-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545395 +0700 +07 m=+1801.514203543, pool_size=39, agent_id=outsource-23ee192e, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-3302239a, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545403 +0700 +07 m=+1801.514211459, pool_size=40}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545416 +0700 +07 m=+1801.514223709, pool_size=41, agent_id=outsource-6c8ce9d7, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-22d7234c, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545435 +0700 +07 m=+1801.514242834, pool_size=42}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {task_id=task-1, expires_at=2026-03-11 00:30:44.545443 +0700 +07 m=+1801.514250751, pool_size=43, agent_id=outsource-8d6b87a9, parent_id=parent-1, role=coder}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.54545 +0700 +07 m=+1801.514257668, pool_size=44, agent_id=outsource-3195682c, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545461 +0700 +07 m=+1801.514269334, pool_size=45, agent_id=outsource-f7ca1ff1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-c5776b66, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545473 +0700 +07 m=+1801.514281084, pool_size=46}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {expires_at=2026-03-11 00:30:44.545486 +0700 +07 m=+1801.514294459, pool_size=47, agent_id=outsource-e5f1d4a7, parent_id=parent-1, role=coder, task_id=task-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {expires_at=2026-03-11 00:30:44.545494 +0700 +07 m=+1801.514302209, pool_size=48, agent_id=outsource-00cc4ecd, parent_id=parent-1, role=coder, task_id=task-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545501 +0700 +07 m=+1801.514309001, pool_size=49, agent_id=outsource-4e8fcd8a, parent_id=parent-1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] outsource: Hired new outsource agent {agent_id=outsource-39f98ea8, parent_id=parent-1, role=coder, task_id=task-1, expires_at=2026-03-11 00:30:44.545509 +0700 +07 m=+1801.514317084, pool_size=50}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=main}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Created implicit main agent (no agents.list configured)
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {agent_id=sales, model=gpt-4, resolved_model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {agent_id=sales, name=Sales Bot, department=, role=, workspace=/tmp/picoclaw-test-registry, model=gpt-4}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=support}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {workspace=/Users/icue/.picoclaw/workspace-support, model=gpt-4, agent_id=support, name=Support Bot, department=, role=}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=my-agent}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {department=, role=, workspace=/tmp/picoclaw-test-registry, model=gpt-4, agent_id=my-agent, name=}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=alpha}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {agent_id=alpha, name=, department=, role=, workspace=/Users/icue/.picoclaw/workspace-alpha, model=gpt-4}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=beta}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {agent_id=beta, name=, department=, role=, workspace=/tmp/picoclaw-test-registry, model=gpt-4}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=parent}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {name=, department=, role=, workspace=/tmp/picoclaw-test-registry, model=gpt-4, agent_id=parent}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=child1}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {name=, department=, role=, workspace=/Users/icue/.picoclaw/workspace-child1, model=gpt-4, agent_id=child1}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=child2}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {name=, department=, role=, workspace=/Users/icue/.picoclaw/workspace-child2, model=gpt-4, agent_id=child2}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=restricted}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {agent_id=restricted, name=, department=, role=, workspace=/Users/icue/.picoclaw/workspace-restricted, model=gpt-4}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=admin}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {agent_id=admin, name=, department=, role=, workspace=/tmp/picoclaw-test-registry, model=gpt-4}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {resolved_model=gpt-4, agent_id=any-agent, model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {model=gpt-4, agent_id=any-agent, name=, department=, role=, workspace=/Users/icue/.picoclaw/workspace-any-agent}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {resolved_model=claude-opus, agent_id=custom, model=claude-opus}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=claude-opus}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {agent_id=custom, name=, department=, role=, workspace=/tmp/picoclaw-test-registry, model=claude-opus}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=inherit}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {workspace=/tmp/picoclaw-test-registry, model=gpt-4, agent_id=inherit, name=, department=, role=}
+Warning: deny patterns are disabled. All commands will be allowed.
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Setting model name in context builder {model=gpt-4, resolved_model=gpt-4, agent_id=no-fallback}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] context: Model name updated, system prompt cache invalidated {model=gpt-4}
+2026/03/11 00:00:44 [2026-03-10T17:00:44Z] [INFO] agent: Registered agent {agent_id=no-fallback, name=, department=, role=, workspace=/tmp/picoclaw-test-registry, model=gpt-4}
+FAIL
+FAIL	picoclaw/agent/pkg/agent	1.997s
+FAIL

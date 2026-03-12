@@ -1,0 +1,206 @@
+{
+  "_comment": "PicoClaw Configuration - A2A Multi-Agent System with 114 Built-in Agents and Token Optimization",
+
+  "session": {
+    "dm_scope": "per-channel-peer"
+  },
+
+  "agents": {
+    "defaults": {
+      "restrict_to_workspace": false,
+      "allow_read_outside_workspace": true,
+      "model": "kimi-coding/kimi-for-coding",
+      "max_tokens": 32768,
+      "max_tool_iterations": 50,
+      "summarize_message_threshold": 20,
+      "summarize_token_percent": 75
+    },
+    "department_models": {
+      "core":               "kimi-coding/kimi-for-coding",
+      "engineering":        "kimi-coding/kimi-for-coding",
+      "design":             "kimi-coding/kimi-for-coding",
+      "marketing":          "kimi-coding/kimi-for-coding",
+      "testing":            "kimi-coding/kimi-for-coding",
+      "product":            "kimi-coding/kimi-for-coding",
+      "project-management": "kimi-coding/kimi-for-coding",
+      "support":            "kimi-coding/kimi-for-coding",
+      "specialized":        "kimi-coding/kimi-for-coding",
+      "game-development":   "kimi-coding/kimi-for-coding",
+      "spatial-computing":  "kimi-coding/kimi-for-coding",
+      "paid-media":         "kimi-coding/kimi-for-coding"
+    }
+  },
+
+  "workspace": {
+    "path": "~/.picoclaw/workspace",
+    "denied_paths": ["~/.ssh", "~/.aws", "~/.kube"],
+    "_comment": "Shared workspace for all agents. Per-agent data stored in agents/{agent_id}/"
+  },
+
+  "a2a": {
+    "enabled": true,
+    "token_optimization": {
+      "phase1_redundant_identity": true,
+      "phase2_context_compression": true,
+      "phase3_message_summarization": true,
+      "phase4_project_summary": true,
+      "phase5_lightweight_prompt": true
+    },
+    "compression": {
+      "full_iterations_keep": 2,
+      "compress_threshold_tokens": 4000,
+      "max_context_tokens": 8000
+    },
+    "messaging": {
+      "recent_messages_keep": 5,
+      "summarize_threshold": 20,
+      "archive_threshold": 50
+    }
+  },
+
+  "channels": {
+    "telegram": {
+      "enabled": false,
+      "token": "YOUR_TELEGRAM_TOKEN",
+      "allow_from": ["*"],
+      "typing": { "enabled": true },
+      "placeholder": { "enabled": true, "text": "Thinking... 💭" }
+    },
+    "discord": { 
+      "enabled": false, 
+      "token": "YOUR_DISCORD_TOKEN" 
+    },
+    "line": { 
+      "enabled": false,
+      "channel_secret": "",
+      "channel_token": ""
+    },
+    "slack": { 
+      "enabled": false,
+      "app_token": "",
+      "bot_token": ""
+    },
+    "whatsapp": { 
+      "enabled": false,
+      "bridge_url": "ws://localhost:3001"
+    }
+  },
+
+  "model_list": [
+    {
+      "model_name": "kimi-for-coding",
+      "model": "kimi-coding/kimi-for-coding",
+      "api_key": "YOUR_API_KEY",
+      "api_base": "https://api.kimi.com/coding/v1"
+    },
+    {
+      "model_name": "qwen3.5-plus",
+      "model": "bailian/qwen3.5-plus",
+      "api_key": "YOUR_API_KEY",
+      "api_base": "https://coding-intl.dashscope.aliyuncs.com/v1"
+    },
+    {
+      "model_name": "kimi-k2.5",
+      "model": "moonshot/kimi-k2.5",
+      "api_key": "YOUR_API_KEY",
+      "api_base": "https://api.moonshot.ai/v1"
+    },
+    {
+      "model_name": "gpt-4o",
+      "model": "openai/gpt-4o",
+      "api_key": "YOUR_API_KEY",
+      "api_base": "https://api.openai.com/v1"
+    },
+    {
+      "model_name": "claude-3-5-sonnet",
+      "model": "anthropic/claude-3-5-sonnet-20241022",
+      "api_key": "YOUR_API_KEY",
+      "api_base": "https://api.anthropic.com/v1"
+    },
+    {
+      "model_name": "deepseek-chat",
+      "model": "deepseek/deepseek-chat",
+      "api_key": "YOUR_API_KEY",
+      "api_base": "https://api.deepseek.com/v1"
+    },
+    {
+      "model_name": "gemini-2.0-flash",
+      "model": "google/gemini-2.0-flash",
+      "api_key": "YOUR_API_KEY",
+      "api_base": "https://generativelanguage.googleapis.com/v1beta"
+    }
+  ],
+
+  "memory": {
+    "type": "sqlite",
+    "database": "~/.picoclaw/picoclaw.db",
+    "rag": {
+      "enabled": true,
+      "embedding_model": "none",
+      "chunk_size": 512,
+      "overlap": 128,
+      "max_results": 5,
+      "similarity_threshold": 0.7,
+      "api_base": "http://localhost:18190",
+      "model_path": "~/.picoclaw/models",
+      "dimension": 384,
+      "vector_weight": 0.7,
+      "keyword_weight": 0.3
+    },
+    "concept_retention_days": 30,
+    "max_context_memories": 10,
+    "auto_save": true
+  },
+
+  "jobs": {
+    "persistence": "sqlite",
+    "database_path": "~/.picoclaw/picoclaw.db",
+    "default_timeout": 3600,
+    "max_concurrent": 10,
+    "cleanup_interval_hours": 24,
+    "retention_days": 30
+  },
+
+  "tools": {
+    "web": {
+      "duckduckgo": { "enabled": true, "max_results": 5 },
+      "brave": { "enabled": false, "api_key": "YOUR_API_KEY", "max_results": 5 },
+      "tavily": { "enabled": false, "api_key": "YOUR_API_KEY", "max_results": 5 },
+      "perplexity": { "enabled": false, "api_key": "YOUR_API_KEY", "max_results": 5 },
+      "fetch_limit_bytes": 10485760
+    },
+    "cron": { "exec_timeout_minutes": 5 },
+    "exec": { "enable_deny_patterns": true, "safety_level": "permissive" },
+    "skills": {
+      "registries": {
+        "clawhub": { "enabled": true, "base_url": "https://clawhub.ai" }
+      },
+      "max_concurrent_searches": 2,
+      "search_cache": { "max_size": 50, "ttl_seconds": 300 }
+    },
+    "mcp": {
+      "enabled": false,
+      "servers": {
+        "playwright": {
+          "enabled": true,
+          "command": "npx",
+          "args": ["-y", "@executeautomation/playwright-mcp-server"]
+        },
+        "sequential-thinking": {
+          "enabled": false,
+          "command": "npx",
+          "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+        },
+        "postgres": {
+          "enabled": false,
+          "command": "npx",
+          "args": ["-y", "@modelcontextprotocol/server-postgres"],
+          "env": { "DATABASE_URL": "postgresql://user:pass@host:5432/db" }
+        }
+      }
+    }
+  },
+
+  "heartbeat": { "enabled": true, "interval": 30 },
+  "gateway": { "host": "127.0.0.1", "port": 18790 }
+}
