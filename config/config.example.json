@@ -9,25 +9,32 @@
     "defaults": {
       "restrict_to_workspace": false,
       "allow_read_outside_workspace": true,
-      "model": "kimi-coding/kimi-for-coding",
+      // New format (preferred): explicit provider + model fields
+      "provider": "kimi-coding",
+      "model": "kimi-for-coding",
       "max_tokens": 32768,
       "max_tool_iterations": 50,
       "summarize_message_threshold": 20,
       "summarize_token_percent": 75
     },
     "department_models": {
-      "core":               "kimi-coding/kimi-for-coding",
-      "engineering":        "kimi-coding/kimi-for-coding",
-      "design":             "kimi-coding/kimi-for-coding",
-      "marketing":          "kimi-coding/kimi-for-coding",
-      "testing":            "kimi-coding/kimi-for-coding",
-      "product":            "kimi-coding/kimi-for-coding",
-      "project-management": "kimi-coding/kimi-for-coding",
-      "support":            "kimi-coding/kimi-for-coding",
-      "specialized":        "kimi-coding/kimi-for-coding",
-      "game-development":   "kimi-coding/kimi-for-coding",
-      "spatial-computing":  "kimi-coding/kimi-for-coding",
-      "paid-media":         "kimi-coding/kimi-for-coding"
+      // New format (preferred): structured objects with provider + model
+      "core":               {"provider": "kimi-coding", "model": "kimi-for-coding"},
+      "engineering":        {"provider": "kimi-coding", "model": "kimi-for-coding"},
+      "design":             {"provider": "kimi-coding", "model": "kimi-for-coding"},
+      "marketing":          {"provider": "kimi-coding", "model": "kimi-for-coding"},
+      "testing":            {"provider": "kimi-coding", "model": "kimi-for-coding"},
+      "product":            {"provider": "kimi-coding", "model": "kimi-for-coding"},
+      "project-management": {"provider": "kimi-coding", "model": "kimi-for-coding"},
+      "support":            {"provider": "kimi-coding", "model": "kimi-for-coding"},
+      "specialized":        {"provider": "kimi-coding", "model": "kimi-for-coding"},
+      "game-development":   {"provider": "kimi-coding", "model": "kimi-for-coding"},
+      "spatial-computing":  {"provider": "kimi-coding", "model": "kimi-for-coding"},
+      "paid-media":         {"provider": "kimi-coding", "model": "kimi-for-coding"}
+
+      // Legacy format (backward compatible): string values
+      // "core":               "kimi-coding/kimi-for-coding",
+      // "engineering":        "kimi-coding/kimi-for-coding"
     }
   },
 
@@ -87,48 +94,69 @@
   },
 
   "model_list": [
+    // New format (preferred): explicit provider + model fields with optional parameters
     {
-      "model_name": "kimi-for-coding",
-      "model": "kimi-coding/kimi-for-coding",
+      "provider": "kimi-coding",
+      "model": "kimi-for-coding",
       "api_key": "YOUR_API_KEY",
-      "api_base": "https://api.kimi.com/coding/v1"
+      "api_base": "https://api.kimi.com/coding/v1",
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "enable_thinking": true
     },
     {
-      "model_name": "qwen3.5-plus",
-      "model": "bailian/qwen3.5-plus",
+      "provider": "bailian",
+      "model": "qwen3.5-plus",
       "api_key": "YOUR_API_KEY",
       "api_base": "https://coding-intl.dashscope.aliyuncs.com/v1"
     },
     {
-      "model_name": "kimi-k2.5",
-      "model": "moonshot/kimi-k2.5",
+      "provider": "moonshotai",
+      "model": "kimi-k2.5",
       "api_key": "YOUR_API_KEY",
-      "api_base": "https://api.moonshot.ai/v1"
+      "api_base": "https://api.moonshot.ai/v1",
+      "temperature": 0.1,
+      "top_p": 0.5,
+      "enable_thinking": true
     },
     {
-      "model_name": "gpt-4o",
-      "model": "openai/gpt-4o",
+      "provider": "openai",
+      "model": "gpt-4o",
       "api_key": "YOUR_API_KEY",
       "api_base": "https://api.openai.com/v1"
     },
     {
-      "model_name": "claude-3-5-sonnet",
-      "model": "anthropic/claude-3-5-sonnet-20241022",
+      "provider": "anthropic",
+      "model": "claude-3-5-sonnet-20241022",
       "api_key": "YOUR_API_KEY",
       "api_base": "https://api.anthropic.com/v1"
     },
     {
-      "model_name": "deepseek-chat",
-      "model": "deepseek/deepseek-chat",
+      "provider": "deepseek",
+      "model": "deepseek-chat",
       "api_key": "YOUR_API_KEY",
       "api_base": "https://api.deepseek.com/v1"
     },
     {
-      "model_name": "gemini-2.0-flash",
-      "model": "google/gemini-2.0-flash",
+      "provider": "google",
+      "model": "gemini-2.0-flash",
       "api_key": "YOUR_API_KEY",
       "api_base": "https://generativelanguage.googleapis.com/v1beta"
-    }
+    },
+    {
+      "provider": "vllm",
+      "model": "Qwen/Qwen3.5-35B-A3B-FP8",
+      "api_base": "http://123.253.61.68:8000/v1",
+      "api_key": "Y1SMkXbuBswv1G8X"
+    },
+
+    // Legacy format (backward compatible): model_name + full model string
+    // {
+    //   "model_name": "kimi-for-coding",
+    //   "model": "kimi-coding/kimi-for-coding",
+    //   "api_key": "YOUR_API_KEY",
+    //   "api_base": "https://api.kimi.com/coding/v1"
+    // }
   ],
 
   "memory": {

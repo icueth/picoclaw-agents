@@ -109,10 +109,11 @@ type AgentsConfig struct {
 	// This field is kept for backward compatibility — if set, these agents
 	// are registered in ADDITION to built-in agents.
 	List []AgentConfig `json:"list,omitempty"`
-	// DepartmentModels maps department name -> model string.
+	// DepartmentModels maps department name -> model configuration.
+	// Supports both legacy string format and new structured format.
 	// Built-in agents inherit their model from this map based on their department.
 	// Falls back to Defaults.Model if a department is not configured here.
-	DepartmentModels map[string]string `json:"department_models,omitempty"`
+	DepartmentModels map[string]DepartmentModelConfig `json:"department_models,omitempty"`
 }
 
 // UnmarshalJSON clears the default agents List before unmarshaling user config.
@@ -153,11 +154,14 @@ func (a *AgentsConfig) UnmarshalJSON(data []byte) error {
 // Falls back to Agents.Defaults.Model if the department is not configured.
 func (c *Config) GetDepartmentModel(department string) string {
 	if c.Agents.DepartmentModels != nil {
-		if m, ok := c.Agents.DepartmentModels[department]; ok && m != "" {
-			return m
+		if modelConfig, ok := c.Agents.DepartmentModels[department]; ok {
+			effectiveModel := modelConfig.GetEffectiveModelName()
+			if effectiveModel != "" {
+				return effectiveModel
+			}
 		}
 	}
-	return c.Agents.Defaults.Model
+	return c.Agents.Defaults.GetModelName()
 }
 
 // AgentModelConfig supports both string and structured model config.
@@ -166,6 +170,14 @@ func (c *Config) GetDepartmentModel(department string) string {
 type AgentModelConfig struct {
 	Primary   string   `json:"primary,omitempty"`
 	Fallbacks []string `json:"fallbacks,omitempty"`
+}
+
+// DepartmentModelConfig supports both string and structured model config for departments.
+// String format: "gpt-4" or "moonshotai/kimi-k2.5" (legacy)
+// Object format: {"provider": "moonshotai", "model": "kimi-k2.5"} (new)
+type DepartmentModelConfig struct {
+	Provider string `json:"provider,omitempty"`
+	Model    string `json:"model,omitempty"`
 }
 
 func (m *AgentModelConfig) UnmarshalJSON(data []byte) error {
@@ -197,6 +209,57 @@ func (m AgentModelConfig) MarshalJSON() ([]byte, error) {
 		Fallbacks []string `json:"fallbacks,omitempty"`
 	}
 	return json.Marshal(raw{Primary: m.Primary, Fallbacks: m.Fallbacks})
+}
+
+func (d *DepartmentModelConfig) UnmarshalJSON(data []byte) error {
+	var s string
+	if err := json.Unmarshal(data, &s); err == nil {
+		// String format - could be just model name or provider/model
+		if strings.Contains(s, "/") {
+			// Legacy provider/model format
+			parts := strings.SplitN(s, "/", 2)
+			d.Provider = parts[0]
+			d.Model = parts[1]
+		} else {
+			// Just model name - provider will be determined from context
+			d.Model = s
+		}
+		return nil
+	}
+
+	// Object format
+	type raw struct {
+		Provider string `json:"provider"`
+		Model    string `json:"model"`
+	}
+	var r raw
+	if err := json.Unmarshal(data, &r); err != nil {
+		return err
+	}
+	d.Provider = r.Provider
+	d.Model = r.Model
+	return nil
+}
+
+func (d DepartmentModelConfig) MarshalJSON() ([]byte, error) {
+	if d.Provider == "" {
+		// If no provider, marshal as string (just the model)
+		return json.Marshal(d.Model)
+	}
+	// Marshal as object
+	type raw struct {
+		Provider string `json:"provider,omitempty"`
+		Model    string `json:"model,omitempty"`
+	}
+	return json.Marshal(raw{Provider: d.Provider, Model: d.Model})
+}
+
+// GetEffectiveModelName returns the effective model name for this department model config.
+func (d *DepartmentModelConfig) GetEffectiveModelName() string {
+	if d.Provider != "" && d.Model != "" {
+		return d.Provider + "/" + d.Model
+	}
+	return d.Model
 }
 
 type AgentConfig struct {
@@ -303,10 +366,13 @@ type AgentDefaults struct {
 	Workspace                 string   `json:"workspace,omitempty"             env:"PICOCLAW_AGENTS_DEFAULTS_WORKSPACE"`
 	RestrictToWorkspace       bool     `json:"restrict_to_workspace"           env:"PICOCLAW_AGENTS_DEFAULTS_RESTRICT_TO_WORKSPACE"`
 	AllowReadOutsideWorkspace bool     `json:"allow_read_outside_workspace"    env:"PICOCLAW_AGENTS_DEFAULTS_ALLOW_READ_OUTSIDE_WORKSPACE"`
-	// Deprecated: Provider is no longer used. The provider is now extracted from the Model field.
+	// Provider field for new format (provider + model).
+	// When used with Model field, forms "provider/model" effective model name.
+	// Also supports legacy format where Model contains full "provider/model" string.
 	Provider                  string   `json:"provider,omitempty"              env:"PICOCLAW_AGENTS_DEFAULTS_PROVIDER"`
-	// Model is the provider/model-id format (e.g., "kimi-coding/kimi-for-coding")
-	// The provider is extracted from the part before "/". Use ModelName for a reference name.
+	// Model is either:
+	// - New format: just the model identifier (e.g., "kimi-for-coding")
+	// - Legacy format: full provider/model string (e.g., "kimi-coding/kimi-for-coding")
 	Model                     string   `json:"model"                           env:"PICOCLAW_AGENTS_DEFAULTS_MODEL"`
 	ModelName                 string   `json:"model_name,omitempty"            env:"PICOCLAW_AGENTS_DEFAULTS_MODEL_NAME"`
 	ModelFallbacks            []string `json:"model_fallbacks,omitempty"`
@@ -330,12 +396,62 @@ func (d *AgentDefaults) GetMaxMediaSize() int {
 }
 
 // GetModelName returns the effective model name for the agent defaults.
-// It prefers the new "model_name" field but falls back to "model" for backward compatibility.
+// It handles both new format (provider + model) and legacy format (full model string).
 func (d *AgentDefaults) GetModelName() string {
 	if d.ModelName != "" {
 		return d.ModelName
 	}
+
+	// New format: provider + model
+	if d.Provider != "" && d.Model != "" {
+		return d.Provider + "/" + d.Model
+	}
+
+	// Legacy format: full model string
+	if d.Model != "" {
+		return d.Model
+	}
+
+	// Fallback to empty string
+	return ""
+}
+
+// GetEffectiveModelID returns the effective model identifier for the agent defaults.
+// It handles both new format (provider + model) and legacy format (full model string).
+func (d *AgentDefaults) GetEffectiveModelID() string {
+	// New format: provider + model
+	if d.Provider != "" && d.Model != "" {
+		return d.Model
+	}
+
+	// Legacy format: full model string
+	if strings.Contains(d.Model, "/") {
+		parts := strings.SplitN(d.Model, "/", 2)
+		if len(parts) > 1 {
+			return parts[1]
+		}
+	}
+
+	// Just model name or empty
 	return d.Model
+}
+
+// GetEffectiveProvider returns the effective provider for the agent defaults.
+// It handles both new format (provider + model) and legacy format (full model string).
+func (d *AgentDefaults) GetEffectiveProvider() string {
+	// New format: explicit provider
+	if d.Provider != "" {
+		return d.Provider
+	}
+
+	// Legacy format: extract from model string
+	if strings.Contains(d.Model, "/") {
+		parts := strings.SplitN(d.Model, "/", 2)
+		return parts[0]
+	}
+
+	// Default to "openai" for models without provider prefix
+	return "openai"
 }
 
 // InitializeAgentDirs initializes agentDir for all agents if not set.
@@ -657,13 +773,39 @@ type OpenAIProviderConfig = DeprecatedOpenAIProvider
 
 // ModelConfig represents a model-centric provider configuration.
 // It allows adding new providers (especially OpenAI-compatible ones) via configuration only.
-// The model field uses protocol prefix format: [protocol/]model-identifier
-// Supported protocols: openai, anthropic, antigravity, claude-cli, codex-cli, github-copilot
-// Default protocol is "openai" if no prefix is specified.
+// Supports both explicit provider/model format and legacy protocol/model-identifier format.
+//
+// New format (preferred):
+//   {
+//     "provider": "kimi-coding",
+//     "model": "kimi-for-coding",
+//     "api_key": "...",
+//     "api_base": "...",
+//     "temperature": 0.7,
+//     "top_p": 0.9,
+//     "enable_thinking": true
+//   }
+//
+// Legacy format (backward compatible):
+//   {
+//     "model_name": "kimi-for-coding",
+//     "model": "kimi-coding/kimi-for-coding",
+//     "api_key": "...",
+//     "api_base": "..."
+//   }
 type ModelConfig struct {
-	// Required fields
-	ModelName string `json:"model_name"` // User-facing alias for the model
-	Model     string `json:"model"`      // Protocol/model-identifier (e.g., "openai/gpt-4o", "anthropic/claude-sonnet-4.6")
+	// Explicit provider field (new format, preferred)
+	// Specifies the provider name (e.g., "kimi-coding", "moonshotai", "openai")
+	Provider string `json:"provider,omitempty"`
+
+	// Model identifier (new format) or full provider/model string (legacy format)
+	// In new format: just the model name (e.g., "kimi-for-coding")
+	// In legacy format: provider/model string (e.g., "kimi-coding/kimi-for-coding")
+	Model string `json:"model"`
+
+	// User-facing alias for the model (optional in new format, required in legacy)
+	// If not provided in new format, will be auto-generated as "provider/model"
+	ModelName string `json:"model_name,omitempty"`
 
 	// HTTP-based providers
 	APIBase string `json:"api_base,omitempty"` // API endpoint URL
@@ -675,6 +817,11 @@ type ModelConfig struct {
 	ConnectMode string `json:"connect_mode,omitempty"` // Connection mode: stdio, grpc
 	Workspace   string `json:"workspace,omitempty"`    // Workspace path for CLI-based providers
 
+	// Model parameters
+	Temperature   *float64 `json:"temperature,omitempty"`   // Temperature for sampling (0.0 to 2.0)
+	TopP          *float64 `json:"top_p,omitempty"`        // Top-p sampling (0.0 to 1.0)
+	EnableThinking *bool   `json:"enable_thinking,omitempty"` // Enable thinking mode (if supported by provider)
+
 	// Optional optimizations
 	RPM            int    `json:"rpm,omitempty"`              // Requests per minute limit
 	MaxTokensField string `json:"max_tokens_field,omitempty"` // Field name for max tokens (e.g., "max_completion_tokens")
@@ -684,13 +831,62 @@ type ModelConfig struct {
 
 // Validate checks if the ModelConfig has all required fields.
 func (c *ModelConfig) Validate() error {
-	if c.ModelName == "" {
-		return fmt.Errorf("model_name is required")
-	}
 	if c.Model == "" {
 		return fmt.Errorf("model is required")
 	}
+
+	// For new format (explicit provider), model_name is optional
+	// For legacy format (no provider), model_name is required
+	if c.Provider == "" && c.ModelName == "" {
+		return fmt.Errorf("model_name is required when provider is not specified")
+	}
+
 	return nil
+}
+
+// GetEffectiveModelName returns the effective model name for this configuration.
+// If ModelName is set, returns it. Otherwise, returns "provider/model".
+func (c *ModelConfig) GetEffectiveModelName() string {
+	if c.ModelName != "" {
+		return c.ModelName
+	}
+	if c.Provider != "" {
+		return c.Provider + "/" + c.Model
+	}
+	// Legacy format - return the full model string
+	return c.Model
+}
+
+// GetEffectiveProvider returns the effective provider name.
+// If Provider is set, returns it. Otherwise, extracts from Model string.
+func (c *ModelConfig) GetEffectiveProvider() string {
+	if c.Provider != "" {
+		return c.Provider
+	}
+	// Extract provider from legacy model string (e.g., "kimi-coding/kimi-for-coding" -> "kimi-coding")
+	if strings.Contains(c.Model, "/") {
+		parts := strings.SplitN(c.Model, "/", 2)
+		return parts[0]
+	}
+	// Default to "openai" for models without provider prefix
+	return "openai"
+}
+
+// GetEffectiveModelID returns the effective model identifier.
+// If Provider is set, returns Model. Otherwise, extracts model ID from Model string.
+func (c *ModelConfig) GetEffectiveModelID() string {
+	if c.Provider != "" {
+		return c.Model
+	}
+	// Extract model ID from legacy model string (e.g., "kimi-coding/kimi-for-coding" -> "kimi-for-coding")
+	if strings.Contains(c.Model, "/") {
+		parts := strings.SplitN(c.Model, "/", 2)
+		if len(parts) > 1 {
+			return parts[1]
+		}
+	}
+	// Return full model string for models without provider prefix
+	return c.Model
 }
 
 type GatewayConfig struct {
@@ -950,6 +1146,8 @@ type A2AConfig struct {
 	Compression A2ACompressionConfig `json:"compression,omitempty"`
 	// Messaging configures A2A message management settings
 	Messaging A2AMessagingConfig `json:"messaging,omitempty"`
+	// Orchestrator configures the A2A orchestrator behavior
+	Orchestrator A2AOrchestratorConfig `json:"orchestrator,omitempty"`
 }
 
 // A2ATokenOptimizationConfig defines configuration for the 5-phase token optimization system.
@@ -984,6 +1182,26 @@ type A2AMessagingConfig struct {
 	SummarizeThreshold int `json:"summarize_threshold,omitempty"`
 	// ArchiveThreshold archives old messages after N messages
 	ArchiveThreshold int `json:"archive_threshold,omitempty"`
+}
+
+// A2AOrchestratorConfig defines configuration for the A2A orchestrator.
+type A2AOrchestratorConfig struct {
+	// MaxConcurrentTasksPerAgent is the maximum number of concurrent tasks per agent (default: 2)
+	MaxConcurrentTasksPerAgent int `json:"max_concurrent_tasks_per_agent,omitempty" env:"PICOCLAW_A2A_MAX_CONCURRENT_TASKS"`
+	// MaxConcurrentLLMCalls is the maximum number of concurrent LLM API calls globally (default: 3)
+	MaxConcurrentLLMCalls int `json:"max_concurrent_llm_calls,omitempty" env:"PICOCLAW_A2A_MAX_LLM_CALLS"`
+	// OutsourcePoolSize is the maximum number of outsource agents in the pool (default: 5)
+	OutsourcePoolSize int `json:"outsource_pool_size,omitempty" env:"PICOCLAW_A2A_OUTSOURCE_POOL_SIZE"`
+	// OutsourceAgentTTLMinutes is the TTL for outsource agents in minutes (default: 30)
+	OutsourceAgentTTLMinutes int `json:"outsource_agent_ttl_minutes,omitempty" env:"PICOCLAW_A2A_OUTSOURCE_TTL_MINUTES"`
+	// SharedContextMaxLogSize is the maximum number of message log entries (default: 1000)
+	SharedContextMaxLogSize int `json:"shared_context_max_log_size,omitempty" env:"PICOCLAW_A2A_SHARED_LOG_SIZE"`
+	// SharedContextMaxContext is the maximum number of context entries (default: 10000)
+	SharedContextMaxContext int `json:"shared_context_max_context,omitempty" env:"PICOCLAW_A2A_SHARED_CONTEXT_SIZE"`
+	// PersistencePath is the path for persisting A2A projects (default: ~/.picoclaw/a2a_projects)
+	PersistencePath string `json:"persistence_path,omitempty" env:"PICOCLAW_A2A_PERSISTENCE_PATH"`
+	// DefaultLanguage is the default language for agent introductions (default: en)
+	DefaultLanguage string `json:"default_language,omitempty" env:"PICOCLAW_A2A_DEFAULT_LANGUAGE"`
 }
 
 func LoadConfig(path string) (*Config, error) {
@@ -1149,22 +1367,50 @@ func (c *Config) GetModelConfig(modelName string) (*ModelConfig, error) {
 // findMatches finds all ModelConfig entries with the given model_name.
 func (c *Config) findMatches(modelName string) []ModelConfig {
 	var matches []ModelConfig
-	
+
 	// If modelName contains "/", treat it as provider/model format
-	// Search by "model" field instead of "model_name"
+	// Search by "model" field for legacy format, or by effective model name for new format
 	if strings.Contains(modelName, "/") {
 		for i := range c.ModelList {
-			if c.ModelList[i].Model == modelName {
-				matches = append(matches, c.ModelList[i])
+			modelCfg := &c.ModelList[i]
+
+			// Check legacy format: direct match on Model field
+			if modelCfg.Model == modelName {
+				matches = append(matches, *modelCfg)
+				continue
+			}
+
+			// Check new format: match on effective model name (provider/model)
+			if modelCfg.GetEffectiveModelName() == modelName {
+				matches = append(matches, *modelCfg)
 			}
 		}
 		return matches
 	}
-	
+
 	// Otherwise, search by model_name (original behavior)
+	// This handles both explicit ModelName and cases where modelName is just a model ID
 	for i := range c.ModelList {
-		if c.ModelList[i].ModelName == modelName {
-			matches = append(matches, c.ModelList[i])
+		modelCfg := &c.ModelList[i]
+
+		// Check explicit ModelName
+		if modelCfg.ModelName == modelName {
+			matches = append(matches, *modelCfg)
+			continue
+		}
+
+		// Check if modelName matches the model ID in new format
+		// (e.g., searching for "kimi-for-coding" when config has provider="kimi-coding", model="kimi-for-coding")
+		if modelCfg.Provider != "" && modelCfg.Model == modelName {
+			matches = append(matches, *modelCfg)
+			continue
+		}
+
+		// Check if modelName matches the effective model name without provider prefix
+		// This handles edge cases where someone might reference just the model part
+		effectiveModelID := modelCfg.GetEffectiveModelID()
+		if effectiveModelID == modelName {
+			matches = append(matches, *modelCfg)
 		}
 	}
 	return matches

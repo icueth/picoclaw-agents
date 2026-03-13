@@ -51,15 +51,15 @@ func resolveProviderSelection(cfg *config.Config) (providerSelection, error) {
 	if len(cfg.ModelList) > 0 {
 		modelCfg, err := cfg.GetModelConfig(model)
 		if err == nil && modelCfg != nil {
-			// Extract protocol from model (e.g., "moonshot/kimi-k2.5" -> "moonshot")
-			// Extract protocol from model (e.g., "moonshot/kimi-k2.5" -> "moonshot")
-			protocol, modelID := ExtractProtocol(modelCfg.Model)
-			
+			// Get effective provider and model ID from the config
+			protocol := modelCfg.GetEffectiveProvider()
+			modelID := modelCfg.GetEffectiveModelID()
+
 			sel.apiKey = modelCfg.APIKey
 			sel.apiBase = modelCfg.APIBase
 			sel.proxy = modelCfg.Proxy
 			sel.model = modelID
-			
+
 			// Handle auth methods
 			if modelCfg.AuthMethod == "oauth" || modelCfg.AuthMethod == "token" {
 				switch protocol {
@@ -83,12 +83,12 @@ func resolveProviderSelection(cfg *config.Config) (providerSelection, error) {
 					return sel, nil
 				}
 			}
-			
+
 			// Set default API base if not specified
 			if sel.apiBase == "" {
 				sel.apiBase = getDefaultAPIBase(protocol)
 			}
-			
+
 			// If we have API key or base, return immediately (ModelList takes precedence)
 			if sel.apiKey != "" || sel.apiBase != "" {
 				return sel, nil

@@ -131,26 +131,86 @@ func skillsRemoveCmd(installer *skills.SkillInstaller, skillName string) {
 	fmt.Printf("✓ Skill '%s' removed successfully!\n", skillName)
 }
 
-func skillsInstallBuiltinCmd(targetSkillsDir string) {
-	builtinSkillsDir := "./picoclaw/skills"
-
-	fmt.Printf("Copying builtin skills to global directory...\n")
-
-	skillsToInstall := []string{
-		"weather",
-		"news",
-		"stock",
-		"calculator",
+func SkillsInstallBuiltinCmd(targetSkillsDir string) {
+	// Get the executable directory to find the source skills directory
+	execPath, err := os.Executable()
+	if err != nil {
+		fmt.Printf("✗ Failed to get executable path: %v\n", err)
+		return
 	}
 
-	for _, skillName := range skillsToInstall {
-		builtinPath := filepath.Join(builtinSkillsDir, skillName)
-		targetPath := filepath.Join(targetSkillsDir, skillName)
+	// Go up to project root and then to skills directory
+	projectRoot := filepath.Join(filepath.Dir(execPath), "..", "..", "..")
+	builtinSkillsDir := filepath.Join(projectRoot, "skills")
 
-		if _, err := os.Stat(builtinPath); err != nil {
-			fmt.Printf("⊘ Builtin skill '%s' not found: %v\n", skillName, err)
+	// Alternative: if running from source, use current directory
+	if _, err := os.Stat(builtinSkillsDir); os.IsNotExist(err) {
+		// Try current working directory
+		cwd, _ := os.Getwd()
+		builtinSkillsDir = filepath.Join(cwd, "skills")
+	}
+
+	fmt.Printf("Scanning and installing all builtin skills to global directory...\n")
+	fmt.Printf("Source skills directory: %s\n", builtinSkillsDir)
+
+	// Get all available builtin skills from source
+	sourceEntries, err := os.ReadDir(builtinSkillsDir)
+	if err != nil {
+		fmt.Printf("✗ Failed to read builtin skills directory: %v\n", err)
+		return
+	}
+
+	// Get currently installed skills
+	var installedSkills []string
+	if _, err := os.Stat(targetSkillsDir); err == nil {
+		installedEntries, err := os.ReadDir(targetSkillsDir)
+		if err == nil {
+			for _, entry := range installedEntries {
+				if entry.IsDir() {
+					installedSkills = append(installedSkills, entry.Name())
+				}
+			}
+		}
+	}
+
+	// Create target directory if it doesn't exist
+	if err := os.MkdirAll(targetSkillsDir, 0o755); err != nil {
+		fmt.Printf("✗ Failed to create target skills directory: %v\n", err)
+		return
+	}
+
+	// Install missing skills
+	installedCount := 0
+	skippedCount := 0
+
+	for _, entry := range sourceEntries {
+		if !entry.IsDir() {
 			continue
 		}
+
+		skillName := entry.Name()
+
+		// Skip hidden directories
+		if strings.HasPrefix(skillName, ".") {
+			continue
+		}
+
+		// Check if already installed
+		isInstalled := false
+		for _, installed := range installedSkills {
+			if installed == skillName {
+				isInstalled = true
+				break
+			}
+		}
+
+		if isInstalled {
+			skippedCount++
+			continue
+		}
+
+		builtinPath := filepath.Join(builtinSkillsDir, skillName)
+		targetPath := filepath.Join(targetSkillsDir, skillName)
 
 		if err := os.MkdirAll(targetPath, 0o755); err != nil {
 			fmt.Printf("✗ Failed to create directory for %s: %v\n", skillName, err)
@@ -159,10 +219,17 @@ func skillsInstallBuiltinCmd(targetSkillsDir string) {
 
 		if err := copyDirectory(builtinPath, targetPath); err != nil {
 			fmt.Printf("✗ Failed to copy %s: %v\n", skillName, err)
+			continue
 		}
+
+		fmt.Printf("✓ Installed builtin skill: %s\n", skillName)
+		installedCount++
 	}
 
-	fmt.Println("\n✓ All builtin skills installed to global directory!")
+	fmt.Printf("\n✓ Builtin skills installation complete!\n")
+	fmt.Printf("   Installed: %d skills\n", installedCount)
+	fmt.Printf("   Skipped (already installed): %d skills\n", skippedCount)
+	fmt.Printf("   Total available: %d skills\n", len(sourceEntries))
 	fmt.Println("All agents can now use these skills.")
 }
 

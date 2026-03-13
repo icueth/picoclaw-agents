@@ -398,3 +398,432 @@ func TestModelConfig_RequestTimeoutDefaultZeroValue(t *testing.T) {
 		t.Fatalf("RequestTimeout = %d, want 0", cfg.RequestTimeout)
 	}
 }
+
+func TestModelConfig_NewFormatWithProvider(t *testing.T) {
+	jsonData := `{
+		"provider": "kimi-coding",
+		"model": "kimi-for-coding",
+		"api_key": "test-key",
+		"api_base": "https://api.kimi.com/coding/v1"
+	}`
+
+	var cfg ModelConfig
+	if err := json.Unmarshal([]byte(jsonData), &cfg); err != nil {
+		t.Fatalf("Unmarshal() error = %v", err)
+	}
+
+	if cfg.Provider != "kimi-coding" {
+		t.Errorf("Provider = %q, want %q", cfg.Provider, "kimi-coding")
+	}
+	if cfg.Model != "kimi-for-coding" {
+		t.Errorf("Model = %q, want %q", cfg.Model, "kimi-for-coding")
+	}
+	if cfg.APIKey != "test-key" {
+		t.Errorf("APIKey = %q, want %q", cfg.APIKey, "test-key")
+	}
+	if cfg.APIBase != "https://api.kimi.com/coding/v1" {
+		t.Errorf("APIBase = %q, want %q", cfg.APIBase, "https://api.kimi.com/coding/v1")
+	}
+
+	// Test effective methods
+	if cfg.GetEffectiveModelName() != "kimi-coding/kimi-for-coding" {
+		t.Errorf("GetEffectiveModelName() = %q, want %q", cfg.GetEffectiveModelName(), "kimi-coding/kimi-for-coding")
+	}
+	if cfg.GetEffectiveProvider() != "kimi-coding" {
+		t.Errorf("GetEffectiveProvider() = %q, want %q", cfg.GetEffectiveProvider(), "kimi-coding")
+	}
+	if cfg.GetEffectiveModelID() != "kimi-for-coding" {
+		t.Errorf("GetEffectiveModelID() = %q, want %q", cfg.GetEffectiveModelID(), "kimi-for-coding")
+	}
+}
+
+func TestModelConfig_LegacyFormat(t *testing.T) {
+	jsonData := `{
+		"model_name": "kimi-for-coding",
+		"model": "kimi-coding/kimi-for-coding",
+		"api_key": "test-key"
+	}`
+
+	var cfg ModelConfig
+	if err := json.Unmarshal([]byte(jsonData), &cfg); err != nil {
+		t.Fatalf("Unmarshal() error = %v", err)
+	}
+
+	if cfg.Provider != "" {
+		t.Errorf("Provider = %q, want empty", cfg.Provider)
+	}
+	if cfg.Model != "kimi-coding/kimi-for-coding" {
+		t.Errorf("Model = %q, want %q", cfg.Model, "kimi-coding/kimi-for-coding")
+	}
+
+	// Test effective methods
+	// model_name takes precedence, so GetEffectiveModelName() should return model_name
+	if cfg.GetEffectiveModelName() != "kimi-for-coding" {
+		t.Errorf("GetEffectiveModelName() = %q, want %q", cfg.GetEffectiveModelName(), "kimi-for-coding")
+	}
+	if cfg.GetEffectiveProvider() != "kimi-coding" {
+		t.Errorf("GetEffectiveProvider() = %q, want %q", cfg.GetEffectiveProvider(), "kimi-coding")
+	}
+	if cfg.GetEffectiveModelID() != "kimi-for-coding" {
+		t.Errorf("GetEffectiveModelID() = %q, want %q", cfg.GetEffectiveModelID(), "kimi-for-coding")
+	}
+}
+
+func TestModelConfig_ValidateNewFormat(t *testing.T) {
+	tests := []struct {
+		name    string
+		config  ModelConfig
+		wantErr bool
+	}{
+		{
+			name: "valid new format with provider",
+			config: ModelConfig{
+				Provider: "kimi-coding",
+				Model:    "kimi-for-coding",
+				APIKey:   "test-key",
+			},
+			wantErr: false,
+		},
+		{
+			name: "valid new format with provider but no model_name",
+			config: ModelConfig{
+				Provider: "kimi-coding",
+				Model:    "kimi-for-coding",
+				APIKey:   "test-key",
+			},
+			wantErr: false, // model_name is optional in new format
+		},
+		{
+			name: "invalid new format missing model",
+			config: ModelConfig{
+				Provider: "kimi-coding",
+				APIKey:   "test-key",
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid legacy format missing model_name",
+			config: ModelConfig{
+				Model: "kimi-coding/kimi-for-coding",
+				APIKey: "test-key",
+			},
+			wantErr: true, // model_name required when provider not specified
+		},
+		{
+			name: "valid legacy format with model_name",
+			config: ModelConfig{
+				ModelName: "kimi-for-coding",
+				Model:     "kimi-coding/kimi-for-coding",
+				APIKey:    "test-key",
+			},
+			wantErr: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			err := tt.config.Validate()
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Validate() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestDepartmentModelConfig_StringFormat(t *testing.T) {
+	tests := []struct {
+		name     string
+		json     string
+		expected DepartmentModelConfig
+	}{
+		{
+			name: "legacy provider/model format",
+			json: `"kimi-coding/kimi-for-coding"`,
+			expected: DepartmentModelConfig{
+				Provider: "kimi-coding",
+				Model:    "kimi-for-coding",
+			},
+		},
+		{
+			name: "just model name",
+			json: `"kimi-for-coding"`,
+			expected: DepartmentModelConfig{
+				Provider: "",
+				Model:    "kimi-for-coding",
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var config DepartmentModelConfig
+			if err := json.Unmarshal([]byte(tt.json), &config); err != nil {
+				t.Fatalf("Unmarshal() error = %v", err)
+			}
+
+			if config.Provider != tt.expected.Provider {
+				t.Errorf("Provider = %q, want %q", config.Provider, tt.expected.Provider)
+			}
+			if config.Model != tt.expected.Model {
+				t.Errorf("Model = %q, want %q", config.Model, tt.expected.Model)
+			}
+			if config.GetEffectiveModelName() != tt.expected.GetEffectiveModelName() {
+				t.Errorf("GetEffectiveModelName() = %q, want %q", config.GetEffectiveModelName(), tt.expected.GetEffectiveModelName())
+			}
+		})
+	}
+}
+
+func TestDepartmentModelConfig_ObjectFormat(t *testing.T) {
+	jsonData := `{
+		"provider": "kimi-coding",
+		"model": "kimi-for-coding"
+	}`
+
+	var config DepartmentModelConfig
+	if err := json.Unmarshal([]byte(jsonData), &config); err != nil {
+		t.Fatalf("Unmarshal() error = %v", err)
+	}
+
+	if config.Provider != "kimi-coding" {
+		t.Errorf("Provider = %q, want %q", config.Provider, "kimi-coding")
+	}
+	if config.Model != "kimi-for-coding" {
+		t.Errorf("Model = %q, want %q", config.Model, "kimi-for-coding")
+	}
+	if config.GetEffectiveModelName() != "kimi-coding/kimi-for-coding" {
+		t.Errorf("GetEffectiveModelName() = %q, want %q", config.GetEffectiveModelName(), "kimi-coding/kimi-for-coding")
+	}
+}
+
+func TestDepartmentModelConfig_MarshalJSON(t *testing.T) {
+	tests := []struct {
+		name     string
+		config   DepartmentModelConfig
+		expected string
+	}{
+		{
+			name: "with provider",
+			config: DepartmentModelConfig{
+				Provider: "kimi-coding",
+				Model:    "kimi-for-coding",
+			},
+			expected: `{"provider":"kimi-coding","model":"kimi-for-coding"}`,
+		},
+		{
+			name: "without provider",
+			config: DepartmentModelConfig{
+				Model: "kimi-for-coding",
+			},
+			expected: `"kimi-for-coding"`,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			data, err := json.Marshal(tt.config)
+			if err != nil {
+				t.Fatalf("Marshal() error = %v", err)
+			}
+
+			if string(data) != tt.expected {
+				t.Errorf("Marshal() = %q, want %q", string(data), tt.expected)
+			}
+		})
+	}
+}
+
+func TestAgentDefaults_NewFormat(t *testing.T) {
+	tests := []struct {
+		name     string
+		defaults AgentDefaults
+		wantName string
+	}{
+		{
+			name: "new provider + model format",
+			defaults: AgentDefaults{
+				Provider: "kimi-coding",
+				Model:    "kimi-for-coding",
+			},
+			wantName: "kimi-coding/kimi-for-coding",
+		},
+		{
+			name: "legacy model field only",
+			defaults: AgentDefaults{
+				Model: "kimi-coding/kimi-for-coding",
+			},
+			wantName: "kimi-coding/kimi-for-coding",
+		},
+		{
+			name: "just model name",
+			defaults: AgentDefaults{
+				Model: "kimi-for-coding",
+			},
+			wantName: "kimi-for-coding",
+		},
+		{
+			name: "model_name takes precedence",
+			defaults: AgentDefaults{
+				ModelName: "custom-name",
+				Provider:  "kimi-coding",
+				Model:     "kimi-for-coding",
+			},
+			wantName: "custom-name",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.defaults.GetModelName(); got != tt.wantName {
+				t.Errorf("GetModelName() = %q, want %q", got, tt.wantName)
+			}
+		})
+	}
+}
+
+func TestAgentDefaults_JSONNewFormat(t *testing.T) {
+	jsonData := `{
+		"provider": "kimi-coding",
+		"model": "kimi-for-coding"
+	}`
+
+	var defaults AgentDefaults
+	if err := json.Unmarshal([]byte(jsonData), &defaults); err != nil {
+		t.Fatalf("Unmarshal() error = %v", err)
+	}
+
+	if defaults.Provider != "kimi-coding" {
+		t.Errorf("Provider = %q, want %q", defaults.Provider, "kimi-coding")
+	}
+	if defaults.Model != "kimi-for-coding" {
+		t.Errorf("Model = %q, want %q", defaults.Model, "kimi-for-coding")
+	}
+	if defaults.GetModelName() != "kimi-coding/kimi-for-coding" {
+		t.Errorf("GetModelName() = %q, want %q", defaults.GetModelName(), "kimi-coding/kimi-for-coding")
+	}
+}
+
+func TestConfig_GetModelConfig_NewFormat(t *testing.T) {
+	cfg := &Config{
+		ModelList: []ModelConfig{
+			{
+				Provider: "kimi-coding",
+				Model:    "kimi-for-coding",
+				APIKey:   "test-key",
+			},
+			{
+				ModelName: "legacy-model",
+				Model:     "anthropic/claude-sonnet",
+				APIKey:    "test-key2",
+			},
+		},
+	}
+
+	// Test finding by effective model name (provider/model)
+	result1, err := cfg.GetModelConfig("kimi-coding/kimi-for-coding")
+	if err != nil {
+		t.Fatalf("GetModelConfig() error = %v", err)
+	}
+	if result1.Provider != "kimi-coding" || result1.Model != "kimi-for-coding" {
+		t.Errorf("Expected kimi-coding/kimi-for-coding, got provider=%q, model=%q", result1.Provider, result1.Model)
+	}
+
+	// Test finding by model name (when provider is set)
+	result2, err := cfg.GetModelConfig("kimi-for-coding")
+	if err != nil {
+		t.Fatalf("GetModelConfig() error = %v", err)
+	}
+	if result2.Provider != "kimi-coding" || result2.Model != "kimi-for-coding" {
+		t.Errorf("Expected kimi-coding/kimi-for-coding, got provider=%q, model=%q", result2.Provider, result2.Model)
+	}
+
+	// Test finding legacy model by model_name
+	result3, err := cfg.GetModelConfig("legacy-model")
+	if err != nil {
+		t.Fatalf("GetModelConfig() error = %v", err)
+	}
+	if result3.ModelName != "legacy-model" || result3.Model != "anthropic/claude-sonnet" {
+		t.Errorf("Expected legacy-model/anthropic/claude-sonnet, got model_name=%q, model=%q", result3.ModelName, result3.Model)
+	}
+
+	// Test finding legacy model by full model string
+	result4, err := cfg.GetModelConfig("anthropic/claude-sonnet")
+	if err != nil {
+		t.Fatalf("GetModelConfig() error = %v", err)
+	}
+	if result4.Model != "anthropic/claude-sonnet" {
+		t.Errorf("Expected anthropic/claude-sonnet, got model=%q", result4.Model)
+	}
+}
+
+func TestConfig_GetDepartmentModel_NewFormat(t *testing.T) {
+	cfg := &Config{
+		Agents: AgentsConfig{
+			Defaults: AgentDefaults{
+				Provider: "default-provider",
+				Model:    "default-model",
+			},
+			DepartmentModels: map[string]DepartmentModelConfig{
+				"engineering": {
+					Provider: "eng-provider",
+					Model:    "eng-model",
+				},
+				"marketing": {
+					Model: "marketing-model", // no provider
+				},
+			},
+		},
+	}
+
+	// Test department with provider+model
+	if model := cfg.GetDepartmentModel("engineering"); model != "eng-provider/eng-model" {
+		t.Errorf("GetDepartmentModel(engineering) = %q, want %q", model, "eng-provider/eng-model")
+	}
+
+	// Test department with just model
+	if model := cfg.GetDepartmentModel("marketing"); model != "marketing-model" {
+		t.Errorf("GetDepartmentModel(marketing) = %q, want %q", model, "marketing-model")
+	}
+
+	// Test fallback to defaults
+	if model := cfg.GetDepartmentModel("nonexistent"); model != "default-provider/default-model" {
+		t.Errorf("GetDepartmentModel(nonexistent) = %q, want %q", model, "default-provider/default-model")
+	}
+}
+
+func TestModelConfig_WithParameters(t *testing.T) {
+	jsonData := `{
+		"provider": "kimi-coding",
+		"model": "kimi-for-coding",
+		"api_key": "test-key",
+		"temperature": 0.7,
+		"top_p": 0.9,
+		"enable_thinking": true
+	}`
+
+	var cfg ModelConfig
+	if err := json.Unmarshal([]byte(jsonData), &cfg); err != nil {
+		t.Fatalf("Unmarshal() error = %v", err)
+	}
+
+	if cfg.Provider != "kimi-coding" {
+		t.Errorf("Provider = %q, want %q", cfg.Provider, "kimi-coding")
+	}
+	if cfg.Model != "kimi-for-coding" {
+		t.Errorf("Model = %q, want %q", cfg.Model, "kimi-for-coding")
+	}
+	if cfg.APIKey != "test-key" {
+		t.Errorf("APIKey = %q, want %q", cfg.APIKey, "test-key")
+	}
+
+	// Test parameters
+	if cfg.Temperature == nil || *cfg.Temperature != 0.7 {
+		t.Errorf("Temperature = %v, want %f", cfg.Temperature, 0.7)
+	}
+	if cfg.TopP == nil || *cfg.TopP != 0.9 {
+		t.Errorf("TopP = %v, want %f", cfg.TopP, 0.9)
+	}
+	if cfg.EnableThinking == nil || !*cfg.EnableThinking {
+		t.Errorf("EnableThinking = %v, want true", cfg.EnableThinking)
+	}
+}

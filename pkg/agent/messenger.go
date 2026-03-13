@@ -273,7 +273,7 @@ func (m *Messenger) processMessages() {
 		m.mu.RUnlock()
 
 		if handler != nil {
-			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 			handler(ctx, msg)
 			cancel()
 		}

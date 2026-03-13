@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"picoclaw/agent/cmd/picoclaw/internal"
+	"picoclaw/agent/cmd/picoclaw/internal/skills"
 	"picoclaw/agent/pkg/config"
 )
 
@@ -32,6 +33,12 @@ func onboard() {
 
 	workspace := cfg.WorkspacePath()
 	createWorkspaceTemplates(workspace)
+
+	// Install all builtin skills automatically
+	fmt.Println("Installing builtin skills...")
+	home, _ := os.UserHomeDir()
+	globalSkillsDir := filepath.Join(home, ".picoclaw", "skills")
+	skills.SkillsInstallBuiltinCmd(globalSkillsDir)
 
 	fmt.Printf("%s picoclaw is ready!\n", internal.Logo)
 	fmt.Println("\n✨ Zero-config keyword search enabled (no external services needed)")

@@ -19,6 +19,7 @@ type AgentRegistry struct {
 	fixAgentList  []string                    // Fixed list of agent IDs from config
 	byDepartment  map[string][]string         // department -> agent IDs
 	byRole        map[string][]string         // role -> agent IDs
+	modelResolver *ModelResolver
 }
 
 // NewAgentRegistry creates a registry from config, instantiating all agents.
@@ -28,22 +29,28 @@ func NewAgentRegistry(
 	provider providers.LLMProvider,
 ) *AgentRegistry {
 	registry := &AgentRegistry{
-		agents:       make(map[string]*AgentInstance),
-		resolver:     routing.NewRouteResolver(cfg),
-		fixAgentList: make([]string, 0),
-		byDepartment: make(map[string][]string),
-		byRole:       make(map[string][]string),
+		agents:        make(map[string]*AgentInstance),
+		resolver:      routing.NewRouteResolver(cfg),
+		fixAgentList:  make([]string, 0),
+		byDepartment:  make(map[string][]string),
+		byRole:        make(map[string][]string),
+		modelResolver: NewModelResolver(cfg, provider),
 	}
 
 	// 1. Load built-in core agents
 	builtinAgents := GetBuiltinAgents()
 	for _, ba := range builtinAgents {
-		// Resolve model from department_models config
+		// Resolve model and provider for this agent
 		model := cfg.GetDepartmentModel(ba.Department)
 		ac := ba.ToAgentConfig(model)
 		id := routing.NormalizeAgentID(ac.ID)
 
-		instance := NewAgentInstance(&ac, &cfg.Agents.Defaults, cfg, provider)
+		// Resolve model and provider for this agent
+		agentModel := registry.modelResolver.ResolveModel(&ac)
+		agentProvider, _ := registry.modelResolver.GetProviderForAgent(id)
+
+		instance := NewAgentInstance(&ac, &cfg.Agents.Defaults, cfg, agentProvider)
+		instance.Model = agentModel // Set the resolved model
 		registry.agents[id] = instance
 		registry.fixAgentList = append(registry.fixAgentList, id)
 
@@ -63,14 +70,17 @@ func NewAgentRegistry(
 	for i := range agentConfigs {
 		ac := &agentConfigs[i]
 		id := routing.NormalizeAgentID(ac.ID)
-		
-		// Skip if already registered by builtin (user config shouldn't override builtin IDs completely this way)
-		// Or maybe we allow override? Let's allow complete override if user explicitly defines it.
-		instance := NewAgentInstance(ac, &cfg.Agents.Defaults, cfg, provider)
-		
+
+		// Resolve model and provider for this agent
+		agentModel := registry.modelResolver.ResolveModel(ac)
+		agentProvider, _ := registry.modelResolver.GetProviderForAgent(id)
+
+		instance := NewAgentInstance(ac, &cfg.Agents.Defaults, cfg, agentProvider)
+		instance.Model = agentModel // Set the resolved model
+
 		if _, exists := registry.agents[id]; !exists {
 			registry.fixAgentList = append(registry.fixAgentList, id)
-			
+
 			// Build department index
 			if ac.Department != "" {
 				registry.byDepartment[ac.Department] = append(registry.byDepartment[ac.Department], id)
@@ -81,7 +91,7 @@ func NewAgentRegistry(
 				registry.byRole[ac.Role] = append(registry.byRole[ac.Role], id)
 			}
 		}
-		
+
 		// Overwrite or add
 		registry.agents[id] = instance
 
@@ -95,11 +105,11 @@ func NewAgentRegistry(
 				"model":      instance.Model,
 			})
 	}
-	
+
 	logger.InfoCF("agent", "Agent registry initialized", map[string]any{
 		"total_agents": len(registry.agents),
-		"builtin": len(builtinAgents),
-		"custom": len(agentConfigs),
+		"builtin":      len(builtinAgents),
+		"custom":       len(agentConfigs),
 	})
 
 	return registry
@@ -144,8 +154,8 @@ func (r *AgentRegistry) SetMemoryManager(mm *MemoryManager) {
 
 	logger.InfoCF("agent", "MemoryManager injected into all agents",
 		map[string]any{
-			"agent_count":   len(r.agents),
-			"rag_enabled":   mm != nil && mm.IsRAGEnabled(),
+			"agent_count": len(r.agents),
+			"rag_enabled": mm != nil && mm.IsRAGEnabled(),
 		})
 }
 
@@ -174,12 +184,12 @@ func (r *AgentRegistry) CanSpawnSubagent(parentAgentID, targetAgentID string) bo
 func (r *AgentRegistry) GetDefaultAgent() *AgentInstance {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
-	
+
 	// 1. New built-in coordinator
 	if agent, ok := r.agents["coordinator"]; ok && agent != nil {
 		return agent
 	}
-	
+
 	// 2. Legacy jarvis or main
 	if agent, ok := r.agents["jarvis"]; ok && agent != nil {
 		return agent

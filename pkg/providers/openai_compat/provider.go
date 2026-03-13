@@ -39,7 +39,7 @@ type Provider struct {
 
 type Option func(*Provider)
 
-const defaultRequestTimeout = 120 * time.Second
+const defaultRequestTimeout = 300 * time.Second
 
 func WithMaxTokensField(maxTokensField string) Option {
 	return func(p *Provider) {
@@ -198,12 +198,18 @@ func (p *Provider) Chat(
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", p.apiBase+"/chat/completions", bytes.NewReader(jsonData))
+	apiURL := strings.TrimSuffix(p.apiBase, "/")
+	if !strings.HasSuffix(apiURL, "/chat/completions") && !strings.HasSuffix(apiURL, "/chat/completions/") {
+		apiURL += "/chat/completions"
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "POST", apiURL, bytes.NewReader(jsonData))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
 	if p.apiKey != "" {
 		req.Header.Set("Authorization", "Bearer "+p.apiKey)
 	}
@@ -407,7 +413,7 @@ func normalizeModel(model, apiBase string) string {
 
 	switch before {
 	case "litellm", "moonshot", "nvidia", "groq", "ollama", "deepseek", "google", "openrouter", "zhipu", "mistral",
-		"bailian", "dashscope", "shengsuanyun", "cerebras", "volcengine", "vllm", "gemini", "qwen":
+		"bailian", "dashscope", "shengsuanyun", "cerebras", "volcengine", "vllm", "gemini", "qwen", "openai":
 		return after
 	default:
 		return model

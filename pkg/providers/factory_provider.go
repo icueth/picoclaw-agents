@@ -66,7 +66,8 @@ func createHTTPProvider(cfg *config.ModelConfig, apiBase string) *HTTPProvider {
 }
 
 // CreateProviderFromConfig creates a provider based on the ModelConfig.
-// It uses the protocol prefix in the Model field to determine which provider to create.
+// It uses the explicit Provider field when available, otherwise falls back to extracting
+// the protocol prefix from the Model field (legacy format).
 // Supported protocols: openai, litellm, anthropic, minimax-portal, antigravity, claude-cli, codex-cli, github-copilot
 // Returns the provider, the model ID (without protocol prefix), and any error.
 func CreateProviderFromConfig(cfg *config.ModelConfig) (LLMProvider, string, error) {
@@ -78,7 +79,9 @@ func CreateProviderFromConfig(cfg *config.ModelConfig) (LLMProvider, string, err
 		return nil, "", fmt.Errorf("model is required")
 	}
 
-	protocol, modelID := ExtractProtocol(cfg.Model)
+	// Get effective provider and model ID from the config
+	protocol := cfg.GetEffectiveProvider()
+	modelID := cfg.GetEffectiveModelID()
 
 	switch protocol {
 	case "openai":
@@ -101,12 +104,13 @@ func CreateProviderFromConfig(cfg *config.ModelConfig) (LLMProvider, string, err
 		return createHTTPProvider(cfg, apiBase), modelID, nil
 
 	case "litellm", "openrouter", "groq", "zhipu", "gemini", "nvidia",
-		"ollama", "moonshot", "shengsuanyun", "deepseek", "cerebras",
+		"ollama", "moonshot", "moonshotai", "shengsuanyun", "deepseek", "cerebras",
 		"volcengine", "vllm", "qwen", "mistral", "bailian", "dashscope":
 		// All other OpenAI-compatible HTTP providers
 		if cfg.APIKey == "" && cfg.APIBase == "" {
-			return nil, "", fmt.Errorf("api_key or api_base is required for HTTP-based protocol %q", protocol)
+			return nil, "", fmt.Errorf("no API key or base configured for model: %s", cfg.GetEffectiveModelName())
 		}
+
 		apiBase := cfg.APIBase
 		if apiBase == "" {
 			apiBase = getDefaultAPIBase(protocol)
@@ -128,7 +132,7 @@ func CreateProviderFromConfig(cfg *config.ModelConfig) (LLMProvider, string, err
 			apiBase = "https://api.anthropic.com/v1"
 		}
 		if cfg.APIKey == "" {
-			return nil, "", fmt.Errorf("api_key is required for anthropic protocol (model: %s)", cfg.Model)
+			return nil, "", fmt.Errorf("api_key is required for anthropic protocol (model: %s)", cfg.GetEffectiveModelName())
 		}
 		return createHTTPProvider(cfg, apiBase), modelID, nil
 
@@ -147,7 +151,7 @@ func CreateProviderFromConfig(cfg *config.ModelConfig) (LLMProvider, string, err
 			apiBase = minimaxPortalBaseURLGlobal
 		}
 		if cfg.APIKey == "" {
-			return nil, "", fmt.Errorf("api_key is required for minimax-portal without oauth (model: %s)", cfg.Model)
+			return nil, "", fmt.Errorf("api_key is required for minimax-portal without oauth (model: %s)", cfg.GetEffectiveModelName())
 		}
 		return createHTTPProvider(cfg, apiBase), modelID, nil
 
@@ -158,14 +162,16 @@ func CreateProviderFromConfig(cfg *config.ModelConfig) (LLMProvider, string, err
 			apiBase = "https://api.kimi.com/coding/v1"
 		}
 		if cfg.APIKey == "" {
-			return nil, "", fmt.Errorf("api_key is required for kimi-coding (model: %s)", cfg.Model)
+			return nil, "", fmt.Errorf("api_key is required for kimi-coding (model: %s)", cfg.GetEffectiveModelName())
 		}
 		// Create provider with custom User-Agent header
 		headers := map[string]string{
 			"User-Agent": "KimiCLI/1.11.0",
 		}
-		// Kimi API expects the full model name including prefix (e.g., "kimi-coding/kimi-for-coding")
-		return NewHTTPProviderWithHeaders(cfg.APIKey, apiBase, cfg.Proxy, headers), cfg.Model, nil
+		// For Kimi, we need to pass the full model name including provider prefix
+		// to maintain compatibility with their API expectations
+		fullModelName := cfg.GetEffectiveModelName()
+		return NewHTTPProviderWithHeaders(cfg.APIKey, apiBase, cfg.Proxy, headers), fullModelName, nil
 
 	case "antigravity":
 		return NewAntigravityProvider(), modelID, nil
@@ -204,9 +210,10 @@ func CreateProviderFromConfig(cfg *config.ModelConfig) (LLMProvider, string, err
 		// Pass the FULL original model name (e.g. "Qwen/Qwen3.5-35B-A3B-FP8")
 		// so the server receives the exact model identifier it expects.
 		if cfg.APIBase != "" {
-			return createHTTPProvider(cfg, cfg.APIBase), cfg.Model, nil
+			fullModelName := cfg.GetEffectiveModelName()
+			return createHTTPProvider(cfg, cfg.APIBase), fullModelName, nil
 		}
-		return nil, "", fmt.Errorf("unknown protocol %q in model %q (set api_base for custom servers)", protocol, cfg.Model)
+		return nil, "", fmt.Errorf("unknown protocol %q in model %q (set api_base for custom servers)", protocol, cfg.GetEffectiveModelName())
 	}
 }
 
@@ -229,7 +236,7 @@ func getDefaultAPIBase(protocol string) string {
 		return "https://integrate.api.nvidia.com/v1"
 	case "ollama":
 		return "http://localhost:11434/v1"
-	case "moonshot":
+	case "moonshot", "moonshotai":
 		return "https://api.moonshot.ai/v1"
 	case "shengsuanyun":
 		return "https://router.shengsuanyun.com/api/v1"

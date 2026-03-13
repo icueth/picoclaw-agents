@@ -75,7 +75,7 @@ func main() {
 	fmt.Printf("👥 Agents Loaded (%d): "+ColorBlue+"%v"+ColorReset+"\n", len(agentIDs), agentIDs)
 
 	// 5. Setup Agent Discovery
-	discovery := agent.NewA2AAgentDiscovery(registry, provider)
+	discovery := agent.NewA2AAgentDiscovery(registry, provider, cfg.Agents.Defaults.GetModelName())
 	// (Note: A2A discovery is usually dynamic, but we can seed it here if needed)
 
 	// 6. Build A2A Orchestrator

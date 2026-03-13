@@ -41,7 +41,16 @@ func ConvertProvidersToModelList(cfg *Config) []ModelConfig {
 
 	// Get user's configured provider and model
 	userProvider := strings.ToLower(cfg.Agents.Defaults.Provider)
-	userModel := cfg.Agents.Defaults.GetModelName()
+
+	// Determine userModel based on whether provider is explicitly set
+	var userModel string
+	if userProvider != "" {
+		// User has explicit provider, extract just the model ID
+		userModel = cfg.Agents.Defaults.GetEffectiveModelID()
+	} else {
+		// No explicit provider, use GetModelName() for backward compatibility
+		userModel = cfg.Agents.Defaults.GetModelName()
+	}
 
 	p := cfg.Providers
 

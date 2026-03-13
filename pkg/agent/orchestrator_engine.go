@@ -137,6 +137,9 @@ type A2AProject struct {
 	KeyDecisions   []string `json:"key_decisions,omitempty"`       // Important decisions made
 	CurrentGoals   []string `json:"current_goals,omitempty"`       // Current project goals
 	ContextVersion int      `json:"context_version"`               // Version for cache invalidation
+
+	// Selected Agents for this project
+	SelectedAgents []string `json:"selected_agents,omitempty"`
 }
 
 // ProjectStatus represents the overall project status
@@ -362,11 +365,40 @@ func NewA2AOrchestrator(
 	cfg *config.Config,
 	msgBus *bus.MessageBus,
 ) *A2AOrchestrator {
-	// Create shared context for all A2A communication
-	sharedCtx := NewSharedContext(1000, 10000)
+	// Get A2A orchestrator configuration with defaults
+	orchConfig := cfg.A2A.Orchestrator
 
-	// Rate limiter: max 3 concurrent LLM calls globally to prevent API overload
-	maxLLMCalls := 3
+	// Create shared context for all A2A communication
+	sharedCtx := NewSharedContext(orchConfig.SharedContextMaxLogSize, orchConfig.SharedContextMaxContext)
+
+	// Rate limiter: max concurrent LLM calls globally to prevent API overload
+	maxLLMCalls := orchConfig.MaxConcurrentLLMCalls
+	if maxLLMCalls <= 0 {
+		maxLLMCalls = 3 // Default fallback
+	}
+
+	// Get persistence path from config or use default
+	persistencePath := orchConfig.PersistencePath
+	if persistencePath == "" {
+		homeDir, _ := os.UserHomeDir()
+		persistencePath = filepath.Join(homeDir, ".picoclaw", "a2a_projects")
+	}
+
+	// Get max concurrent tasks per agent from config
+	maxConcurrent := orchConfig.MaxConcurrentTasksPerAgent
+	if maxConcurrent <= 0 {
+		maxConcurrent = 2 // Default fallback
+	}
+
+	// Get outsource pool settings from config
+	outsourcePoolSize := orchConfig.OutsourcePoolSize
+	if outsourcePoolSize <= 0 {
+		outsourcePoolSize = 5 // Default fallback
+	}
+	outsourceTTL := time.Duration(orchConfig.OutsourceAgentTTLMinutes) * time.Minute
+	if outsourceTTL <= 0 {
+		outsourceTTL = 30 * time.Minute // Default fallback
+	}
 
 	o := &A2AOrchestrator{
 		registry:         registry,
@@ -374,20 +406,20 @@ func NewA2AOrchestrator(
 		config:           cfg,
 		msgBus:           msgBus,
 		projects:         make(map[string]*A2AProject),
-		discovery:        NewA2AAgentDiscovery(registry, provider),
+		discovery:        NewA2AAgentDiscovery(registry, provider, cfg.Agents.Defaults.GetModelName()),
 		mailboxes:        make(map[string]*mailbox.Mailbox),
 		messengers:       make(map[string]*Messenger),
 		workers:          make(map[string]*A2AAgentWorker),
 		sharedCtx:        sharedCtx,
 		assignmentCount:  make(map[string]int),
 		projectShortcuts: make(map[string]string),
-		maxConcurrent:    2, // default 2 tasks per agent
+		maxConcurrent:    maxConcurrent,
 		latestProjectID:  "",
 		llmRateLimiter:   make(chan struct{}, maxLLMCalls),
 		maxLLMConcurrent: maxLLMCalls,
-		outsourcePool:    NewOutsourcePool(5, 30*time.Minute), // Default 5 max outsource agents
+		outsourcePool:    NewOutsourcePool(outsourcePoolSize, outsourceTTL),
 		stopChan:         make(chan struct{}),
-		persistencePath:  filepath.Join(os.Getenv("HOME"), ".picoclaw", "a2a_projects"),
+		persistencePath:  persistencePath,
 	}
 
 	// Create persistence directory
@@ -1470,7 +1502,34 @@ func (o *A2AOrchestrator) runA2ADiscovery(project *A2AProject) error {
 		return fmt.Errorf("no agents found in the registry")
 	}
 
-	// 2. บีบอัดข้อมูล (Minify) เพื่อลด Token (ใช้แค่ ID, Role, และ Skills หลัก)
+	// --- OPTIMIZATION: Two-Stage Discovery ---
+	// Stage 1: Fast Screening (Keyword-based) เพื่อลดเอดเจน 103 ตัว ให้เหลือแค่ตัวเต็ง (Candidates)
+	// วิธีนี้ช่วยประหยัด Token และลด Noise เพื่อให้ LLM ตัดสินใจได้แม่นยำขึ้น
+	type ScoredAgent struct {
+		cap   *A2AAgentCapability
+		score float64
+	}
+	var scoredAgents []ScoredAgent
+	for _, cap := range allCapabilities {
+		// ใช้คีย์เวิร์ดที่อัปเดตใหม่ (รองรับไทย/ภาษาย่อ) ในการกรองเบื้องต้น
+		score := o.discovery.ScoreAgentForTask(cap.AgentID, project.Description)
+		scoredAgents = append(scoredAgents, ScoredAgent{cap, score})
+	}
+	
+	// เรียงจากคะแนนมากไปน้อย
+	sort.Slice(scoredAgents, func(i, j int) bool {
+		return scoredAgents[i].score > scoredAgents[j].score
+	})
+	
+	// คัดตัวเต็ง 30 ตัวแรก (หรือทั้งหมดถ้าไม่ถึง 30) เพื่อส่งให้ LLM รัดกุมแต่ครบถ้วน
+	candidateLimit := 30
+	if len(scoredAgents) < candidateLimit {
+		candidateLimit = len(scoredAgents)
+	}
+	
+	topCandidates := scoredAgents[:candidateLimit]
+
+	// 2. บีบอัดข้อมูล (Minify) เฉพาะตัวเต็งเพื่อส่งให้ LLM Semantic Selection (Stage 2)
 	type MinifiedAgent struct {
 		ID         string   `json:"id"`
 		Role       string   `json:"role"`
@@ -1479,10 +1538,10 @@ func (o *A2AOrchestrator) runA2ADiscovery(project *A2AProject) error {
 	}
 	
 	var compressedAgents []MinifiedAgent
-	agentMap := make(map[string]*A2AAgentCapability) // ไว้สำหรับดึงข้อมูลเต็มตอนหลัง
+	agentMap := make(map[string]*A2AAgentCapability) 
 	
-	for _, cap := range allCapabilities {
-		// เอาเฉพาะ Skills หลักๆ มาไม่เกิน 5 อย่างเพื่อประหยัด Token
+	for _, sa := range topCandidates {
+		cap := sa.cap
 		skills := cap.Capabilities
 		if len(skills) > 5 {
 			skills = skills[:5]
@@ -1497,33 +1556,31 @@ func (o *A2AOrchestrator) runA2ADiscovery(project *A2AProject) error {
 		agentMap[cap.AgentID] = cap
 	}
 
-	// แปลงเป็น JSON String
 	agentsJSON, err := json.Marshal(compressedAgents)
 	if err != nil {
 		logger.ErrorCF("a2a_orchestrator", "Failed to marshal compressed agents", map[string]any{"error": err})
 		return err
 	}
 
-	// 3. สร้าง Prompt เพื่อให้ LLM ทำหน้าที่เป็น HR / Semantic Router
-	prompt := fmt.Sprintf(`You are Jarvis, the core coordinator of a multi-agent system.
-Your task is to analyze a new project and select the BEST agents for the job from the available roster.
+	// 3. สร้าง Prompt สำหรับ Stage 2: Semantic Selection โดยผู้เชี่ยวชาญ (LLM)
+	prompt := fmt.Sprintf(`คุณคือ Jarvis หัวหน้าทีมประสานงานระดับสูง
+ภารกิจของคุณคือ: คัดเลือกเอดเจนที่ "เก่งที่สุด" และ "เหมาะสมที่สุด" เข้าสู่ทีมโปรเจกต์
 
-Project Name: %s
-Project Description: %s
+ชื่อโปรเจกต์: %s
+วัตถุประสงค์: %s
 
-Available Agents (JSON):
+รายการเอดเจนตัวเต็ง (คัดสรรเบื้องต้น 30 รายจากทั้งหมด 103 รายเพื่อให้คุณพิจารณา):
 %s
 
-INSTRUCTIONS:
-1. Analyze the project requirements carefully.
-2. Review the list of available agents, their roles, and skills.
-3. Select up to 8 agents that are highly relevant to this specific project.
-4. DO NOT select agents that are completely irrelevant.
-5. VARIETY AND EXPLORATION: If multiple agents have similar skills that fit the job, try to mix and match. Do not always pick the exact same team for similar tasks. Give opportunities to specialized or niche agents if their skills relate to a part of the project.
-6. Respond ONLY with a valid JSON array of strings containing the selected agent IDs.
+คำแนะนำในการคัดเลือก (สำคัญมาก):
+1. วิเคราะห์ความต้องการของโปรเจกต์อย่างละเอียด (ต้องการคนเขียนโค้ดภาษาอะไร? ต้องทำ UI ไหม? ต้องมี QA หรือเปล่า?)
+2. เลือกเอดเจนเข้าทีม "ไม่เกิน 8 ราย" ที่มีความสามารถตรงกับเป้าหมายนี้
+3. เน้นความหลากหลายของสายงาน (เช่น ถ้ามีงาน Coding 3 ภาษา ควรเลือกเอดเจนที่เก่งแต่ละภาษานั้นๆ หรือฝ่ายอื่นที่เกี่ยวข้อง)
+4. หากมีเอดเจนที่มีทักษะคล้ายกัน ให้คัดเลือกจากโปรไฟล์และบทบาท (Role) ที่เหมาะสมที่สุดสำหรับโครงสร้างโดยรวม
+5. ตอบกลับเฉพาะ JSON Array ของ Agent IDs เท่านั้น
 
-Example response format:
-["backend-architect", "frontend-developer", "api-tester", "technical-writer"]`, 
+ตัวอย่างการตอบกลับ:
+["backend-architect", "go-expert", "python-coder", "js-developer", "api-tester"]`, 
 		project.Name, project.Description, string(agentsJSON))
 
 	// 4. ส่ง Request ให้ LLM ตัดสินใจ (1 Call API เท่านั้น แก้ปัญหา 429 แบบเด็ดขาด!)
@@ -1536,9 +1593,9 @@ Example response format:
 	
 	// ใช้ Coordinator Agent (หรือตัวหลักที่มี) เป็นตัวเรียก Provider
 	if o.provider != nil {
-		resp, err := o.provider.Chat(ctxLLM, messages, nil, "bailian/qwen3-coder-plus", map[string]any{
+		resp, err := o.provider.Chat(ctxLLM, messages, nil, o.config.Agents.Defaults.GetModelName(), map[string]any{
 			"temperature": 0.4, // เพิ่มความหลากหลายนิดหน่อย ไม่ให้ออกมาแต่หน้าเดิมๆ
-			"max_tokens":  500,  // เพิ่มเผื่อหน่อยกัน JSON ตัด
+			"max_tokens":  800,  // เพิ่มเผื่อหน่อยกัน JSON ตัด
 		})
 		
 		if err == nil {
@@ -1564,17 +1621,13 @@ Example response format:
 		}
 	}
 	
-	// 5. Fallback เผื่อ LLM ล่ม หรือ Parse ไม่ผ่าน (กลับไปใช้ Rule-based แบบเก่า)
+	// 5. Fallback เผื่อ LLM ล่ม หรือ Parse ไม่ผ่าน (ใช้ผลลัพธ์จาก Stage 1 ที่ดีที่สุด 8 อันดับ)
 	if len(selectedAgentIDs) == 0 {
-		logger.InfoCF("a2a_orchestrator", "Using Rule-Based Fallback for Discovery", nil)
-		for _, cap := range allCapabilities {
-			if o.discovery.ScoreAgentForTask(cap.AgentID, project.Description) > 3.0 {
-				selectedAgentIDs = append(selectedAgentIDs, cap.AgentID)
+		logger.InfoCF("a2a_orchestrator", "Using Rule-Based Fallback (Top Scored) for Discovery", nil)
+		for i := 0; i < len(scoredAgents) && i < 8; i++ {
+			if scoredAgents[i].score > 3.0 {
+				selectedAgentIDs = append(selectedAgentIDs, scoredAgents[i].cap.AgentID)
 			}
-		}
-		// จำกัดจำนวน 8 ตัว
-		if len(selectedAgentIDs) > 8 {
-			selectedAgentIDs = selectedAgentIDs[:8]
 		}
 	}
 
@@ -1594,7 +1647,7 @@ Example response format:
 		project.Name, project.Description)
 		
 	for _, agentID := range finalTargetedAgents {
-		o.sendA2AMessage("jarvis", agentID, "discovery", discoveryMsg)
+		o.sendA2AMessage(project.ID, "jarvis", agentID, "discovery", discoveryMsg)
 		time.Sleep(200 * time.Millisecond) // Throttling นิดหน่อย
 	}
 
@@ -1608,19 +1661,20 @@ Example response format:
 	respondedAgents := make(map[string]bool)
 	for _, resp := range responses {
 		respondedAgents[resp.From] = true
-		o.sendA2AMessage(resp.From, "jarvis", "discovery_response", resp.Content)
+		o.sendA2AMessage(project.ID, resp.From, "jarvis", "discovery_response", resp.Content)
 	}
 
 	for _, cap := range targetedCapabilities {
 		if !respondedAgents[cap.AgentID] {
-			o.sendA2AMessage(cap.AgentID, "jarvis", "discovery_response",
+			o.sendA2AMessage(project.ID, cap.AgentID, "jarvis", "discovery_response",
 				fmt.Sprintf("🙋 ผม %s ครับ! มีความเชี่ยวชาญด้าน %v พร้อมสนับสนุนงานนี้ครับ (Simulated)", 
 				cap.AgentName, cap.Capabilities))
 		}
 	}
 
-	// สรุปข้อมูลบันทึกลง Metadata ของ Phase
+	// สรุปข้อมูลบันทึกลง Metadata ของ Phase และบันทึกเอดเจนที่ถูกเลือก
 	project.mu.Lock()
+	project.SelectedAgents = finalTargetedAgents
 	project.Phases[PhaseDiscovery].Metadata = map[string]interface{}{
 		"agents_discovered": len(finalTargetedAgents),
 		"capabilities":      targetedCapabilities,
@@ -1645,7 +1699,7 @@ func (o *A2AOrchestrator) runA2AMeeting(project *A2AProject) error {
 		map[string]any{"project_id": project.ID})
 
 	// 1. Jarvis เปิดประชุม
-	o.sendA2AMessage("jarvis", "committee", "meeting_start",
+	o.sendA2AMessage(project.ID, "jarvis", "committee", "meeting_start",
 		fmt.Sprintf("🤝 เริ่มการประชุมทีมโปรเจกต์ %s\nเป้าหมายคือ: %s\nขอความเห็นจากผู้เชี่ยวชาญในการวางแผนงานนี้หน่อยครับ", 
 		project.Name, project.Description))
 
@@ -1666,19 +1720,24 @@ func (o *A2AOrchestrator) runA2AMeeting(project *A2AProject) error {
 		})
 
 		if err == nil {
-			o.sendA2AMessage("jarvis", "committee", "meeting_strategy", resp.Content)
+			o.sendA2AMessage(project.ID, "jarvis", "committee", "meeting_strategy", resp.Content)
 			project.mu.Lock()
 			project.Phases[PhaseMeeting].Result = resp.Content
 			project.mu.Unlock()
 		}
 	}
 
-	// จำลองการสนทนาระหว่าง Agent (เพื่อให้ผู้ใช้เห็น workflow)
-	time.Sleep(3 * time.Second)
-	
-	// Nova (Architect) ให้ความเห็น
-	o.sendA2AMessage("nova", "jarvis", "meeting_response", 
-		"🌌 ผม Nova ดูภาพรวมระบบให้ครับ แนะนำให้เริ่มจาก Discovery ข้อมูลให้แน่นก่อน แล้วค่อยเริ่ม Code ครับ")
+	// 3. จำลองการแนะนำตัวแบบไดนามิกจากเอดเจนที่ถูกเลือก (Real Context!)
+	for _, agentID := range project.SelectedAgents {
+		// Nova และ Jarvis พูดไปแล้ว ข้ามไป
+		if agentID == "jarvis" || agentID == "nova" {
+			continue
+		}
+		
+		intro := o.getAgentIntroduction(agentID)
+		o.sendA2AMessage(project.ID, agentID, "committee", "meeting_introduction", intro)
+		time.Sleep(500 * time.Millisecond) // เว้นจังหวะให้ดูสมจริง
+	}
 
 	return nil
 }
@@ -1763,9 +1822,19 @@ Tasks to analyze:
 	for i, task := range tasks {
 		prompt += fmt.Sprintf("%d. %s\n", i+1, task)
 	}
+	
+	prompt += "\nTEAM MEMBERS AVAILABLE FOR THIS PROJECT:\n"
+	for _, agentID := range project.SelectedAgents {
+		if cap, ok := o.discovery.capabilities[agentID]; ok {
+			prompt += fmt.Sprintf("- %s: %s (%s). Skills: %v\n", 
+				agentID, cap.Role, cap.Department, cap.Capabilities)
+		} else {
+			prompt += fmt.Sprintf("- %s: General Agent\n", agentID)
+		}
+	}
 
 	prompt += `
-For each task, analyze which agent is BEST suited based on their specific Role, Department, and Persona prompt. Avoid generic assignments. Consider the specific expertise (e.g., a UI Designer for screens, a Backend Coder for APIs).
+For each task, analyze which agent is BEST suited based on the TEAM MEMBERS available below. Avoid generic assignments. Consider the specific expertise (e.g., a UI Designer for screens, a Backend Coder for APIs).
 
 Respond in this exact format for each task:
 TASK: <task description>
@@ -2000,7 +2069,7 @@ func (o *A2AOrchestrator) createAssignmentsForPhase(project *A2AProject, coordin
 			assignment.Order = 0 // Critical tasks first
 		}
 
-		o.sendA2AMessage(coordinatorID, assignment.ToAgent, "task_assignment",
+		o.sendA2AMessage(project.ID, coordinatorID, assignment.ToAgent, "task_assignment",
 			fmt.Sprintf("📝 Task Assignment [Phase %d]\nTask: %s\nComplexity: %s\nEstimated: %d min\nProject: %s",
 				phase.PhaseNumber, task.Task, task.Complexity, task.EstimatedMin, project.Name))
 
@@ -2193,7 +2262,7 @@ func (o *A2AOrchestrator) runA2AExecution(project *A2AProject) error {
 
 // executeA2AAssignment executes an assignment via A2A with REAL worker execution
 // validAgentIDs contains the list of valid agent IDs in the system
-var validAgentIDs = map[string]bool{
+var validAgentIDsFallback = map[string]bool{
 	"jarvis":   true,
 	"atlas":    true,
 	"scribe":   true,
@@ -2204,9 +2273,22 @@ var validAgentIDs = map[string]bool{
 	"nova":     true,
 }
 
-// isValidAgentID checks if the agent ID is valid
-func isValidAgentID(agentID string) bool {
-	return validAgentIDs[agentID]
+// isValidAgentID checks if the agent ID is valid by checking current workers
+func (o *A2AOrchestrator) isValidAgentID(agentID string) bool {
+	o.mu.RLock()
+	defer o.mu.RUnlock()
+	
+	// Check if we have a worker for it (active)
+	if _, ok := o.workers[agentID]; ok {
+		return true
+	}
+	
+	// Fallback to registry check
+	if _, ok := o.registry.GetAgent(agentID); ok {
+		return true
+	}
+
+	return validAgentIDsFallback[agentID]
 }
 
 func (o *A2AOrchestrator) executeA2AAssignment(project *A2AProject, assignment *A2AAssignment) error {
@@ -2218,7 +2300,7 @@ func (o *A2AOrchestrator) executeA2AAssignment(project *A2AProject, assignment *
 		})
 
 	// Validate agent ID before proceeding
-	if !isValidAgentID(assignment.ToAgent) {
+	if !o.isValidAgentID(assignment.ToAgent) {
 		assignment.ToAgent = o.findBestAgentForTask(assignment.Task)
 	}
 
@@ -2252,7 +2334,7 @@ func (o *A2AOrchestrator) executeA2AAssignment(project *A2AProject, assignment *
 	o.updateAssignmentProgress(project, assignment, 0, "Task assigned to "+assignment.ToAgent)
 
 	// Send start message to agent (triggers worker to execute)
-	o.sendA2AMessage(assignment.FromAgent, assignment.ToAgent, "task_start",
+	o.sendA2AMessage(project.ID, assignment.FromAgent, assignment.ToAgent, "task_start",
 		fmt.Sprintf("🚀 Task: %s%s", assignment.Task, contextStr))
 
 	// Update progress: In Progress (25%)
@@ -2295,7 +2377,7 @@ func (o *A2AOrchestrator) executeA2AAssignment(project *A2AProject, assignment *
 		logger.InfoCF("a2a_orchestrator", "Handoff requested",
 			map[string]any{"from": assignment.ToAgent, "to": newAgent, "task": assignment.Task})
 
-		if isValidAgentID(newAgent) && newAgent != assignment.ToAgent {
+		if o.isValidAgentID(newAgent) && newAgent != assignment.ToAgent {
 			assignment.ToAgent = newAgent
 			o.updateAssignmentProgress(project, assignment, 10, "Handoff to "+newAgent)
 			return o.executeA2AAssignment(project, assignment) // Recursive retry with new agent
@@ -2357,7 +2439,7 @@ func (o *A2AOrchestrator) runA2AIntegration(project *A2AProject) error {
 	coordinatorID := "jarvis"
 
 	// Request integration from all agents
-	o.sendA2AMessage(coordinatorID, "all", "integration_request",
+	o.sendA2AMessage(project.ID, coordinatorID, "all", "integration_request",
 		"Please submit your deliverables for integration.")
 
 	// Wait for REAL deliverables from agents (fallback timeout)
@@ -2381,7 +2463,7 @@ func (o *A2AOrchestrator) runA2AIntegration(project *A2AProject) error {
 	}
 
 	// Integration complete
-	o.sendA2AMessage(coordinatorID, "all", "integration_complete",
+	o.sendA2AMessage(project.ID, coordinatorID, "all", "integration_complete",
 		fmt.Sprintf("All components integrated successfully. Received %d deliverables.", len(responses)))
 
 	return nil
@@ -2401,7 +2483,7 @@ func (o *A2AOrchestrator) runA2AValidation(project *A2AProject) error {
 	}
 	project.mu.RUnlock()
 
-	o.sendA2AMessage("jarvis", "sentinel", "validation_request", validationPrompt)
+	o.sendA2AMessage(project.ID, "jarvis", "sentinel", "validation_request", validationPrompt)
 
 	// Wait for REAL validation result (fallback timeout)
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
@@ -2433,7 +2515,7 @@ func (o *A2AOrchestrator) runA2AValidation(project *A2AProject) error {
 }
 
 // sendA2AMessage sends a message between agents via A2A
-func (o *A2AOrchestrator) sendA2AMessage(from, to, msgType, content string) {
+func (o *A2AOrchestrator) sendA2AMessage(projectID, from, to, msgType, content string) {
 	msg := A2AMessage{
 		ID:        GenerateA2AMessageID(),
 		From:      from,
@@ -2441,16 +2523,24 @@ func (o *A2AOrchestrator) sendA2AMessage(from, to, msgType, content string) {
 		Type:      msgType,
 		Content:   content,
 		Timestamp: time.Now(),
+		ProjectID: projectID,
 	}
 
-	// Store in project messages (find project by iterating)
+	// Store in specific project messages
 	o.mu.RLock()
-	for _, project := range o.projects {
+	project, ok := o.projects[projectID]
+	if !ok && projectID == "" {
+		// Fallback to latest project if ID is empty
+		project = o.projects[o.latestProjectID]
+	}
+	o.mu.RUnlock()
+
+	if project != nil {
 		project.mu.Lock()
 		project.Messages = append(project.Messages, msg)
 		project.mu.Unlock()
+		o.saveProject(project.ID)
 	}
-	o.mu.RUnlock()
 
 	// Send via messenger if available
 	// Convert msgType string to agentcomm.MessageType
@@ -2533,36 +2623,92 @@ func (o *A2AOrchestrator) sendA2AMessage(from, to, msgType, content string) {
 
 // broadcastToAllAgents broadcasts a message to all agents
 func (o *A2AOrchestrator) broadcastToAllAgents(project *A2AProject, msgType, content string) {
-	o.sendA2AMessage("jarvis", "all", msgType, content)
+	o.sendA2AMessage(project.ID, "jarvis", "all", msgType, content)
 }
 
 // Helper methods
 
 func (o *A2AOrchestrator) getAgentIntroduction(agentID string) string {
-	intros := map[string]string{
-		"jarvis":   "👋 Hi, I'm Jarvis, the coordinator. I'll manage this project.",
-		"nova":     "🔮 Hello, I'm Nova, the architect. I design systems.",
-		"atlas":    "📚 Hi, I'm Atlas, the researcher. I find best practices.",
-		"clawed":   "🔧 Hello, I'm Clawed, the coder. I implement solutions.",
-		"pixel":    "🎨 Hi, I'm Pixel, the designer. I create UI/UX.",
-		"sentinel": "🛡️ Hello, I'm Sentinel, the QA specialist. I ensure quality.",
-		"scribe":   "📝 Hi, I'm Scribe, the technical writer. I document.",
-		"trendy":   "🔍 Hello, I'm Trendy, the analyst. I design schemas.",
+	// Get agent capabilities from discovery
+	cap, ok := o.discovery.capabilities[agentID]
+	if !ok {
+		return fmt.Sprintf("Hi, I'm %s, ready to contribute.", agentID)
 	}
-	if intro, ok := intros[agentID]; ok {
-		return intro
+
+	// Get default language from config
+	lang := o.config.A2A.Orchestrator.DefaultLanguage
+	if lang == "" {
+		lang = "en"
 	}
-	return fmt.Sprintf("Hi, I'm %s, ready to contribute.", agentID)
+
+	// Select emoji based on department
+	emoji := "🤖"
+	switch cap.Department {
+	case "Engineering", "Development":
+		emoji = "⚙️"
+	case "Architecture", "Design":
+		emoji = "📐"
+	case "Research", "Analysis":
+		emoji = "🔍"
+	case "Quality Assurance", "QA":
+		emoji = "🛡️"
+	case "Content", "Documentation":
+		emoji = "📝"
+	}
+
+	// Return introduction in the configured language
+	switch lang {
+	case "th", "thai":
+		return fmt.Sprintf("%s สวัสดีครับ ผมคือ %s (%s) รับหน้าที่ดูแลงานด้าน %s ครับ พร้อมลุย!",
+			emoji, agentID, cap.Role, cap.Department)
+	case "ja", "jp", "japanese":
+		return fmt.Sprintf("%s こんにちは、%s (%s) です。%s の担当です。よろしくお願いします！",
+			emoji, agentID, cap.Role, cap.Department)
+	case "zh", "cn", "chinese":
+		return fmt.Sprintf("%s 你好，我是 %s (%s)，负责 %s 工作。随时准备开始！",
+			emoji, agentID, cap.Role, cap.Department)
+	default: // English
+		return fmt.Sprintf("%s Hi, I'm %s (%s), responsible for %s. Ready to go!",
+			emoji, agentID, cap.Role, cap.Department)
+	}
 }
 
 func (o *A2AOrchestrator) getProposedAssignments(project *A2AProject) string {
-	return `Nova: Architecture design
-Clawed: Backend implementation  
+	// Get all registered agents from the registry
+	agentIDs := o.registry.ListAgentIDs()
+	if len(agentIDs) == 0 {
+		// Fallback to default assignments if no agents registered
+		return `Nova: Architecture design
+Clawed: Backend implementation
 Pixel: Frontend development
 Trendy: Database design
 Sentinel: QA and testing
 Scribe: Documentation
 Atlas: Research and best practices`
+	}
+
+	// Build assignments from actual registered agents
+	var assignments []string
+	for _, agentID := range agentIDs {
+		if agent, ok := o.registry.GetAgent(agentID); ok && agent.Config != nil {
+			// Determine role/area based on agent capabilities or department
+			area := "General tasks"
+			if len(agent.Config.Capabilities) > 0 {
+				area = agent.Config.Capabilities[0]
+			}
+			if agent.Config.Department != "" {
+				area = agent.Config.Department
+			}
+			assignments = append(assignments, fmt.Sprintf("%s: %s", agentID, area))
+		}
+	}
+
+	if len(assignments) == 0 {
+		// Fallback if we couldn't get any agent info
+		return `Available agents will be assigned based on their capabilities`
+	}
+
+	return strings.Join(assignments, "\n")
 }
 
 func (o *A2AOrchestrator) extractTasks(project *A2AProject) []string {
@@ -3083,7 +3229,7 @@ AgentName: Task description
 Assignments:`
 
 	// Call LLM
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 
 	messages := []protocoltypes.Message{{Role: "user", Content: prompt}}
@@ -3115,7 +3261,7 @@ List each task on a new line starting with "- ".
 
 Tasks:`, project.Name, project.Description)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 
 	messages := []protocoltypes.Message{{Role: "user", Content: prompt}}
@@ -3219,7 +3365,7 @@ TASK: <task description>
 AGENT: <agent_id>
 ---`
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 
 	messages := []protocoltypes.Message{{Role: "user", Content: prompt}}

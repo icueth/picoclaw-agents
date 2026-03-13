@@ -3,6 +3,7 @@ package agent
 import (
 	"fmt"
 	"strings"
+	"sync"
 
 	"picoclaw/agent/pkg/config"
 	"picoclaw/agent/pkg/providers"
@@ -17,7 +18,9 @@ const DefaultModel = "kimi-k2.5"
 type ModelResolver struct {
 	cfg             *config.Config
 	defaultProvider providers.LLMProvider
-	agentModels     map[string]string // agentID -> resolved model name
+	agentModels     map[string]string                // agentID -> resolved model name
+	providers       map[string]providers.LLMProvider // modelName -> provider
+	mu              sync.RWMutex
 }
 
 // NewModelResolver creates a new ModelResolver with the given config and default provider.
@@ -26,23 +29,55 @@ func NewModelResolver(cfg *config.Config, defaultProvider providers.LLMProvider)
 		cfg:             cfg,
 		defaultProvider: defaultProvider,
 		agentModels:     make(map[string]string),
+		providers:       make(map[string]providers.LLMProvider),
 	}
 }
 
 // GetProviderForAgent returns the appropriate LLM provider for a given agent ID.
-// Currently returns the default provider, but can be extended to support
-// per-agent provider selection based on model requirements.
+// Returns a specific provider if configured for the agent's model, otherwise default.
 func (r *ModelResolver) GetProviderForAgent(agentID string) (providers.LLMProvider, error) {
-	if r.defaultProvider == nil {
-		return nil, fmt.Errorf("no default provider configured")
-	}
-
 	// Normalize the agent ID
 	normalizedID := routing.NormalizeAgentID(agentID)
 
-	// TODO: In future phases, this can look up agent-specific provider
-	// configurations based on the agent's model requirements
-	_ = normalizedID
+	// 1. Get resolved model for this agent
+	modelName, ok := r.GetResolvedModel(normalizedID)
+	if !ok {
+		// If not resolved yet, we can't determine the provider.
+		// Return default for now.
+		return r.defaultProvider, nil
+	}
+
+	// 2. Check if we already have a provider for this model
+	r.mu.RLock()
+	if p, exists := r.providers[modelName]; exists {
+		r.mu.RUnlock()
+		return p, nil
+	}
+	r.mu.RUnlock()
+
+	// 3. Try to create a provider for this model if it's in model_list
+	modelCfg, err := r.cfg.GetModelConfig(modelName)
+	if err == nil && modelCfg != nil {
+		r.mu.Lock()
+		defer r.mu.Unlock()
+
+		// Double check after lock
+		if p, exists := r.providers[modelName]; exists {
+			return p, nil
+		}
+
+		p, modelID, err := providers.CreateProviderFromConfig(modelCfg)
+		if err == nil && p != nil {
+			_ = modelID // We use the provider wrapper
+			r.providers[modelName] = p
+			return p, nil
+		}
+	}
+
+	// 4. Default fallback
+	if r.defaultProvider == nil {
+		return nil, fmt.Errorf("no default provider configured")
+	}
 
 	return r.defaultProvider, nil
 }

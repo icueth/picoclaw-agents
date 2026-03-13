@@ -16,7 +16,7 @@ func newInstallBuiltinCommand(workspaceFn func() (string, error)) *cobra.Command
 			// Install to global skills directory so all agents can share
 			home, _ := os.UserHomeDir()
 			globalSkillsDir := filepath.Join(home, ".picoclaw", "skills")
-			skillsInstallBuiltinCmd(globalSkillsDir)
+			SkillsInstallBuiltinCmd(globalSkillsDir)
 			return nil
 		},
 	}

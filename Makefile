@@ -173,7 +173,7 @@ build-all: generate
 	@echo "All builds complete"
 
 ## install: Install picoclaw to system (zero-config, no external services needed)
-install: build
+install: build verify-skills
 	@echo "Installing $(BINARY_NAME)..."
 	@echo "Platform: $(PLATFORM), Arch: $(ARCH)"
 	@echo "Install prefix: $(INSTALL_PREFIX)"
@@ -406,6 +406,12 @@ test-rag-specific: build-rag-tester
 	@echo "Running RAG test: $(TEST)"
 	@$(BUILD_DIR)/rag-tester -config=$(PICOCLAW_HOME)/config.json -test="$(TEST)"
 
+## verify-skills: Verify and install missing builtin skills
+verify-skills:
+	@echo "Verifying and installing missing builtin skills..."
+	@$(BUILD_DIR)/$(BINARY_NAME) skills install-builtin
+	@echo "✅ Skills verification complete!"
+
 ## install-check: Check installation paths and environment
 install-check:
 	@echo "=== PicoClaw Installation Check ==="
@@ -446,7 +452,7 @@ install-user:
 	$(MAKE) install INSTALL_PREFIX=$(HOME)/.local
 
 ## reinstall: Reinstall picoclaw (clean and install)
-reinstall: clean uninstall build install
+reinstall: clean uninstall build verify-skills install
 
 ## help: Show this help message
 help:

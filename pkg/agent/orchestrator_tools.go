@@ -327,7 +327,7 @@ func (t *SendA2AMessageTool) Execute(ctx context.Context, args map[string]any) *
 	}
 
 	// Send the message
-	t.orchestrator.sendA2AMessage(from, to, msgType, message)
+	t.orchestrator.sendA2AMessage("", from, to, msgType, message)
 
 	// If not waiting for response, return immediately
 	if !waitForResponse {

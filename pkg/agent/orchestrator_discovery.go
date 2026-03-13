@@ -34,14 +34,16 @@ type A2AAgentDiscovery struct {
 	mu           sync.RWMutex
 	registry     *AgentRegistry
 	provider     providers.LLMProvider
+	defaultModel string
 	capabilities map[string]*A2AAgentCapability
 }
 
 // NewA2AAgentDiscovery creates a new A2A agent discovery
-func NewA2AAgentDiscovery(registry *AgentRegistry, provider providers.LLMProvider) *A2AAgentDiscovery {
+func NewA2AAgentDiscovery(registry *AgentRegistry, provider providers.LLMProvider, defaultModel string) *A2AAgentDiscovery {
 	return &A2AAgentDiscovery{
 		registry:     registry,
 		provider:     provider,
+		defaultModel: defaultModel,
 		capabilities: make(map[string]*A2AAgentCapability),
 	}
 }
@@ -161,8 +163,13 @@ Respond ONLY with a score from 0.0 to 10.0, where 10.0 is a perfect match and 0.
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
+	model := d.defaultModel
+	if model == "" {
+		model = "bailian/qwen-plus" // Ultra fallback
+	}
+
 	messages := []protocoltypes.Message{{Role: "user", Content: prompt}}
-	resp, err := d.provider.Chat(ctx, messages, nil, "gpt-4o-mini", map[string]any{
+	resp, err := d.provider.Chat(ctx, messages, nil, model, map[string]any{
 		"temperature": 0.0,
 		"max_tokens":  10,
 	})
@@ -192,20 +199,20 @@ func (d *A2AAgentDiscovery) ScoreAgentForTask(agentID string, task string) float
 
 	// Score based on role match
 	roleScores := map[string][]string{
-		"architect":   {"design", "architecture", "system", "plan", "structural", "pattern"},
-		"coder":       {"code", "implement", "develop", "backend", "api", "golang", "java", "python", "javascript", "typescript"},
-		"researcher":  {"research", "analyze", "study", "investigate", "find", "search", "lookup"},
-		"writer":      {"write", "document", "readme", "content", "copy", "blog"},
-		"designer":    {"ui", "ux", "frontend", "visual", "css", "html", "react", "vue"},
-		"qa":          {"test", "quality", "review", "validate", "verify", "audit", "bug", "fix"},
-		"analyst":     {"analyze", "data", "schema", "sql", "database", "migration"},
-		"coordinator": {"coordinate", "manage", "lead", "orchestrate", "pm"},
+		"architect":   {"design", "architecture", "system", "plan", "structural", "pattern", "ออกแบบ", "วางแผน", "สถาปัตยกรรม"},
+		"coder":       {"code", "implement", "develop", "backend", "api", "golang", "java", "python", "javascript", "typescript", "js", "go", "py", "เขียน", "สร้าง", "โค้ด", "ฟังก์ชัน", "function"},
+		"researcher":  {"research", "analyze", "study", "investigate", "find", "search", "lookup", "ค้นหา", "วิจัย", "ข้อมูล"},
+		"writer":      {"write", "document", "readme", "content", "copy", "blog", "เขียน", "บทความ", "เอกสาร"},
+		"designer":    {"ui", "ux", "frontend", "visual", "css", "html", "react", "vue", "ออกแบบ", "ดีไซน์", "หน้าตา"},
+		"qa":          {"test", "quality", "review", "validate", "verify", "audit", "bug", "fix", "ทดสอบ", "ตรวจสอบ", "คิวเอ"},
+		"analyst":     {"analyze", "data", "schema", "sql", "database", "migration", "วิเคราะห์", "ข้อมูล", "ฐานข้อมูล"},
+		"coordinator": {"coordinate", "manage", "lead", "orchestrate", "pm", "ประสานงาน", "จัดการ", "หัวหน้า"},
 	}
 
 	if keywords, ok := roleScores[strings.ToLower(caps.Role)]; ok {
 		for _, keyword := range keywords {
 			if strings.Contains(taskLower, keyword) {
-				score += 3.0 // High weight for role-task alignment
+				score += 4.0 // Increased weight for role-task alignment
 			}
 		}
 	}

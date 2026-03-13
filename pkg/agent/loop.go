@@ -1551,7 +1551,7 @@ func formatToolsForLog(toolDefs []providers.ToolDefinition) string {
 
 // summarizeSession summarizes the conversation history for a session.
 func (al *AgentLoop) summarizeSession(agent *AgentInstance, sessionKey string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 
 	history := agent.Sessions.GetHistory(sessionKey)

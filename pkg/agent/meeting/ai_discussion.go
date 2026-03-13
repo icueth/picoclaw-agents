@@ -218,7 +218,7 @@ Respond in character as %s. Be concise (2-4 sentences) but insightful.`,
 	)
 
 	// Call LLM
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 
 	response, err := dm.callLLM(ctx, prompt)

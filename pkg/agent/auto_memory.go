@@ -65,7 +65,7 @@ func (al *AgentLoop) maybeGenerateSessionSummary(
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
 	defer cancel()
 
 	// Collect user and assistant messages
@@ -116,7 +116,7 @@ func (al *AgentLoop) doExtractMemory(
 		"assistant_msg_len": len(assistantMessage),
 	})
 
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 
 	logger.DebugCF("memory", "Starting automatic memory extraction (v2)", map[string]any{
@@ -352,7 +352,7 @@ If NO new permanent facts exist, output exactly: NONE`
 // doConsolidate runs LLM-based memory consolidation to merge related entries
 // and prune redundant ones. Called periodically from doExtractMemory.
 func (al *AgentLoop) doConsolidate(agent *AgentInstance, sm *StructuredMemory) {
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 
 	entries := sm.GetEntries()
@@ -401,7 +401,7 @@ func (al *AgentLoop) doExtractTask(
 		return
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 
 	// Truncate assistant message to keep prompt short
