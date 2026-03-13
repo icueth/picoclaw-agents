@@ -176,8 +176,11 @@ type AgentModelConfig struct {
 // String format: "gpt-4" or "moonshotai/kimi-k2.5" (legacy)
 // Object format: {"provider": "moonshotai", "model": "kimi-k2.5"} (new)
 type DepartmentModelConfig struct {
-	Provider string `json:"provider,omitempty"`
-	Model    string `json:"model,omitempty"`
+	Provider      string   `json:"provider,omitempty"`
+	Model         string   `json:"model,omitempty"`
+	Temperature   *float64 `json:"temperature,omitempty"`   // Temperature for sampling (0.0 to 2.0)
+	TopP          *float64 `json:"top_p,omitempty"`        // Top-p sampling (0.0 to 1.0)
+	EnableThinking *bool   `json:"enable_thinking,omitempty"` // Enable thinking mode (if supported by provider)
 }
 
 func (m *AgentModelConfig) UnmarshalJSON(data []byte) error {
@@ -229,8 +232,11 @@ func (d *DepartmentModelConfig) UnmarshalJSON(data []byte) error {
 
 	// Object format
 	type raw struct {
-		Provider string `json:"provider"`
-		Model    string `json:"model"`
+		Provider      string   `json:"provider"`
+		Model         string   `json:"model"`
+		Temperature   *float64 `json:"temperature,omitempty"`
+		TopP          *float64 `json:"top_p,omitempty"`
+		EnableThinking *bool   `json:"enable_thinking,omitempty"`
 	}
 	var r raw
 	if err := json.Unmarshal(data, &r); err != nil {
@@ -238,6 +244,9 @@ func (d *DepartmentModelConfig) UnmarshalJSON(data []byte) error {
 	}
 	d.Provider = r.Provider
 	d.Model = r.Model
+	d.Temperature = r.Temperature
+	d.TopP = r.TopP
+	d.EnableThinking = r.EnableThinking
 	return nil
 }
 

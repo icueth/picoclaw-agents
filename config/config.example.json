@@ -15,22 +15,25 @@
       "max_tokens": 32768,
       "max_tool_iterations": 50,
       "summarize_message_threshold": 20,
-      "summarize_token_percent": 75
+      "summarize_token_percent": 75,
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "enable_thinking": true
     },
     "department_models": {
-      // New format (preferred): structured objects with provider + model
-      "core":               {"provider": "kimi-coding", "model": "kimi-for-coding"},
-      "engineering":        {"provider": "kimi-coding", "model": "kimi-for-coding"},
-      "design":             {"provider": "kimi-coding", "model": "kimi-for-coding"},
-      "marketing":          {"provider": "kimi-coding", "model": "kimi-for-coding"},
-      "testing":            {"provider": "kimi-coding", "model": "kimi-for-coding"},
-      "product":            {"provider": "kimi-coding", "model": "kimi-for-coding"},
-      "project-management": {"provider": "kimi-coding", "model": "kimi-for-coding"},
-      "support":            {"provider": "kimi-coding", "model": "kimi-for-coding"},
-      "specialized":        {"provider": "kimi-coding", "model": "kimi-for-coding"},
-      "game-development":   {"provider": "kimi-coding", "model": "kimi-for-coding"},
-      "spatial-computing":  {"provider": "kimi-coding", "model": "kimi-for-coding"},
-      "paid-media":         {"provider": "kimi-coding", "model": "kimi-for-coding"}
+      // New format (preferred): structured objects with provider + model + parameters
+      "core":               {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.1, "top_p": 0.5, "enable_thinking": true},
+      "engineering":        {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.1, "top_p": 0.5, "enable_thinking": true},
+      "design":             {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.7, "top_p": 0.9, "enable_thinking": true},
+      "marketing":          {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.1, "top_p": 0.5, "enable_thinking": true},
+      "testing":            {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.1, "top_p": 0.5, "enable_thinking": true},
+      "product":            {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.1, "top_p": 0.5, "enable_thinking": true},
+      "project-management": {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.7, "top_p": 0.9, "enable_thinking": true},
+      "support":            {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.1, "top_p": 0.5, "enable_thinking": true},
+      "specialized":        {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.1, "top_p": 0.5, "enable_thinking": true},
+      "game-development":   {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.7, "top_p": 0.9, "enable_thinking": true},
+      "spatial-computing":  {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.7, "top_p": 0.9, "enable_thinking": true},
+      "paid-media":         {"provider": "kimi-coding", "model": "kimi-for-coding", "temperature": 0.7, "top_p": 0.9, "enable_thinking": true}
 
       // Legacy format (backward compatible): string values
       // "core":               "kimi-coding/kimi-for-coding",
